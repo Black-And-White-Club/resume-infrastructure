@@ -9,8 +9,8 @@ terraform {
 
 # Configure the Google Cloud provider with your project ID
 provider "google" {
-  project = "resume-portfolio-project"  # Replace with your actual project ID
-  region  = "us-central1"  # Or your preferred region
+  project = "resume-portfolio-project" # Replace with your actual project ID
+  region  = "us-central1"              # Or your preferred region
 }
 
 resource "google_service_account" "service_account" {
@@ -26,7 +26,7 @@ resource "google_project_iam_member" "terraform_binding" {
 
 resource "google_project_iam_member" "compute_binding" {
   project = "resume-portfolio-project"
-  role    = "roles/compute.admin"  # For Compute Engine
+  role    = "roles/compute.admin" # For Compute Engine
   member  = "serviceAccount:${google_service_account.service_account.email}"
 }
 
