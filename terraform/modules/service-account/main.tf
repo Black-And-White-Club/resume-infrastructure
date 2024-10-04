@@ -41,3 +41,9 @@ resource "google_project_iam_member" "app_binding" {
   role    = "roles/storage.objectAdmin" # Example app role
   member  = "serviceAccount:${google_service_account.service_account.email}"
 }
+
+resource "google_project_iam_member" "arc_binding" {
+  project = "resume-portfolio-project"
+  role    = "roles/artifactregistry.admin" # Example app role
+  member  = "serviceAccount:${google_service_account.service_account.email}"
+}
