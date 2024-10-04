@@ -23,7 +23,7 @@ resource "google_project_iam_member" "gke_role" {
   member  = "serviceAccount:${google_service_account.service_account.email}"
 }
 
-resource "google_project_iam_member" "compute_role" {
+resource "google_project_iam_member" "compute_engine_role" {
   project = var.project_id
   role    = "roles/compute.admin"
   member  = "serviceAccount:${google_service_account.service_account.email}"
@@ -35,7 +35,7 @@ resource "google_project_iam_member" "cloudsql_role" {
   member  = "serviceAccount:${google_service_account.service_account.email}"
 }
 
-resource "google_project_iam_member" "app_role" {
+resource "google_project_iam_member" "cloud_storage_role" {
   project = var.project_id
   role    = "roles/storage.objectAdmin"
   member  = "serviceAccount:${google_service_account.service_account.email}"
