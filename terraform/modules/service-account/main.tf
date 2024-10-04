@@ -7,43 +7,42 @@ terraform {
   }
 }
 
-# Configure the Google Cloud provider with your project ID
 provider "google" {
-  project = "resume-portfolio-project" # Replace with your actual project ID
-  region  = "us-central1"              # Or your preferred region
+  project = var.project_id
+  region  = var.region
 }
 
 resource "google_service_account" "service_account" {
-  account_id   = "resume-app-sa"
-  display_name = "Resume App Service Account"
+  account_id   = var.service_account_id
+  display_name = var.service_account_display_name
 }
 
-resource "google_project_iam_member" "terraform_binding" {
-  project = "resume-portfolio-project"
-  role    = "roles/container.admin" # For GKE
+resource "google_project_iam_member" "gke_role" {
+  project = var.project_id
+  role    = "roles/container.admin"
   member  = "serviceAccount:${google_service_account.service_account.email}"
 }
 
-resource "google_project_iam_member" "compute_binding" {
-  project = "resume-portfolio-project"
-  role    = "roles/compute.admin" # For Compute Engine
+resource "google_project_iam_member" "compute_role" {
+  project = var.project_id
+  role    = "roles/compute.admin"
   member  = "serviceAccount:${google_service_account.service_account.email}"
 }
 
-resource "google_project_iam_member" "cloudsql_binding" {
-  project = "resume-portfolio-project"
-  role    = "roles/cloudsql.admin" # For Cloud SQL
+resource "google_project_iam_member" "cloudsql_role" {
+  project = var.project_id
+  role    = "roles/cloudsql.admin"
   member  = "serviceAccount:${google_service_account.service_account.email}"
 }
 
-resource "google_project_iam_member" "app_binding" {
-  project = "resume-portfolio-project"
-  role    = "roles/storage.objectAdmin" # Example app role
+resource "google_project_iam_member" "app_role" {
+  project = var.project_id
+  role    = "roles/storage.objectAdmin"
   member  = "serviceAccount:${google_service_account.service_account.email}"
 }
 
-resource "google_project_iam_member" "arc_binding" {
-  project = "resume-portfolio-project"
-  role    = "roles/artifactregistry.admin" # Example app role
+resource "google_project_iam_member" "artifact_registry_role" {
+  project = var.project_id
+  role    = "roles/artifactregistry.admin"
   member  = "serviceAccount:${google_service_account.service_account.email}"
 }
