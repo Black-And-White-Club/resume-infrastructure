@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resume-frontend
+  namespace: resume-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: resume-frontend
+  template:
+    metadata:
+      labels:
+        app: resume-frontend
+    spec:
+      containers:
+        - name: resume-frontend
+          image: resume-frontend:1.0 # Replace with your actual image name
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
