@@ -6,6 +6,6 @@ resource "google_artifact_registry_repository" "docker_repo" {
   description   = "Resume Portfolio Docker Images"
 
   docker_config {
-    immutable_tags = true
+    immutable_tags = false
   }
 }
