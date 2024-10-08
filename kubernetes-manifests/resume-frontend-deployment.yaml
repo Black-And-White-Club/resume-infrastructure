@@ -15,7 +15,6 @@ spec:
     spec:
       containers:
         - name: resume-frontend
-          image: resume-frontend:1.0 # Replace with your actual image name
-          imagePullPolicy: Never
+          image: resume-frontend:1.0
           ports:
             - containerPort: 8080
