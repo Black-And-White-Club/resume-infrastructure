@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
         - name: resume-frontend
-          \1 us-central1-docker.pkg.dev/resume-portfolio-project/portfolio-app-images/resume-frontend:8062306d77af5e19c15f56b145f1b3663852fce6
+          image: us-central1-docker.pkg.dev/resume-portfolio-project/portfolio-app-images/resume-frontend:8062306d77af5e19c15f56b145f1b3663852fce6
           ports:
             - containerPort: 8080
