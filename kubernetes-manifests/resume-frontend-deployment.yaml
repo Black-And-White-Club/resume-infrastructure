@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
         - name: resume-frontend
-          image: us-central1-docker.pkg.dev/${GCP_PROJECT_ID}/portfolio-app-images/resume-frontend:c1148f0
+          image: us-central1-docker.pkg.dev/${GCP_PROJECT_ID}/portfolio-app-images/resume-frontend:5703c69
           ports:
             - containerPort: 8080
