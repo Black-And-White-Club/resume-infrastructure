@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: resume-backend
-          image: us-central1-docker.pkg.dev/${GCP_PROJECT_ID}/portfolio-app-images/resume-backend:8e889f5
+          image: resume-backend:1.0
           imagePullPolicy: Never
           ports:
             - containerPort: 8000
