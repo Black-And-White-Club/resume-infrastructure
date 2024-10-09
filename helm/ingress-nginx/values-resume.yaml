@@ -1,8 +1,0 @@
-ingress:
-  host: resume-app.local
-
-frontend:
-  port: 80
-
-backend:
-  port: 8000

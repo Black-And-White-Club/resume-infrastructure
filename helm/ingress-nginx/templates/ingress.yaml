@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: resume-app-ingress
+  namespace: resume-app
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: resume-app.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: resume-frontend
+                port:
+                  number: 80
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: resume-backend
+                port:
+                  number: 8000
