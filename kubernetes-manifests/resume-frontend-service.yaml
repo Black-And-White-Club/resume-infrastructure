@@ -7,7 +7,7 @@ spec:
   selector:
     app: resume-frontend
   ports:
-    - name: http
+    - name: https
       port: 80
       targetPort: 8080
   type: ClusterIP

@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: resume-backend
+  namespace: resume-app
+spec:
+  selector:
+    matchLabels:
+      app: resume-backend
+  namespaceSelector:
+    matchNames:
+      - resume-app
+  endpoints:
+    - port: https
+      path: /metrics
+      interval: 2m
