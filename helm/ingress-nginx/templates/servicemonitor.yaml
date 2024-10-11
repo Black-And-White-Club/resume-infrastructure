@@ -1,0 +1,21 @@
+{{- if and .Values.controller.metrics.enabled .Values.controller.metrics.serviceMonitor.enabled -}}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: ingress-nginx-controller 
+  namespace: resume-app           
+  labels:
+    release: prometheus         
+    app.kubernetes.io/component: controller
+spec:
+  endpoints:
+  - port: metrics             
+    interval: 2m               
+  namespaceSelector:
+    matchNames:
+      - resume-app               
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ingress-nginx
+      app.kubernetes.io/component: controller
+{{- end }}

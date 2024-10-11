@@ -1,0 +1,16 @@
+{{- if and (.Capabilities.APIVersions.Has "monitoring.coreos.com/v1") .Values.server.metrics.enabled .Values.server.metrics.serviceMonitor.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: argocd-server-monitor
+  namespace: argocd
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: argocd-server
+  endpoints:
+    - port: metrics
+      interval: 2m
+{{- end }}

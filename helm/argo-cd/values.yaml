@@ -4,3 +4,5 @@ server:
     type: ClusterIP
   metrics:
     enabled: true
+    serviceMonitor:
+      enabled: true

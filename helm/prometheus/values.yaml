@@ -1,34 +1,16 @@
-serviceMonitors:
-  resume-backend:
-    enabled: true
-    namespace: resume-app
-    selector:
-      matchLabels:
-        app: resume-backend
-    namespaceSelector:
-      matchNames:
-        - resume-app
-    endpoints:
-      - port: https
-        path: /metrics
-        interval: 2m
+prometheus:
+  prometheusSpec:
+    podMonitorNamespaceSelector:
+      matchExpressions: []
+    podMonitorSelector: {}
+    podMonitorSelectorNilUsesHelmValues: false
 
-  ingress-nginx:
-    enabled: true
-    namespace: resume-app
-    selector:
-      matchLabels:
-        app.kubernetes.io/name: ingress-nginx
-    endpoints:
-      - port: metrics
-        interval: 2m
+    ruleNamespaceSelector:
+      matchExpressions: []
+    ruleSelector: {}
+    ruleSelectorNilUsesHelmValues: false
 
-  argocd:
-    enabled: true
-    namespace: argocd
-    selector:
-      matchLabels:
-        app.kubernetes.io/name: argocd
-    endpoints:
-      - port: metrics
-        interval: 2m
+    serviceMonitorNamespaceSelector:
+      matchExpressions: []
+    serviceMonitorSelector: {}
+    serviceMonitorSelectorNilUsesHelmValues: false

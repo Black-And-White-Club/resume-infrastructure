@@ -1,3 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: resume-frontend-svc
+  namespace: resume-app
+  labels:
+    job: astro-web
+    app: resume-frontend
+    tier: frontend
+spec:
+  selector:
+    app: resume-frontend
+  ports:
+    - name: web-port
+      port: 80
+      targetPort: 8080
+  type: ClusterIP
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,6 +35,6 @@ spec:
       containers:
         - name: resume-frontend
           image: resume-frontend:1.0
-          imagePullPolicy: Never
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080

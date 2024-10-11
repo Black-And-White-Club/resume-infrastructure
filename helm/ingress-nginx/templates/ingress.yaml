@@ -6,20 +6,20 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: resume-app.local
+    - host: "resume-app.local"
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: resume-frontend
+                name: resume-frontend-svc
                 port:
                   number: 80
           - path: /api
             pathType: Prefix
             backend:
               service:
-                name: resume-backend
+                name: resume-backend-svc
                 port:
                   number: 8000
