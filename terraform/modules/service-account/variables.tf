@@ -20,7 +20,7 @@ variable "service_account_display_name" {
   default     = "Resume App Service Account"
 }
 
-variable "credentials_file" {
-  description = "File location for iam credentials"
+variable "service_account_email" {
+  description = "Service account email"
   type        = string
 }
