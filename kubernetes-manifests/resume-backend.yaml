@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
         - name: resume-backend
-          image: resume-backend:1.0
+          image: us-central1-docker.pkg.dev/${GCP_PROJECT_ID}/portfolio-app-images/resume-frontend:123
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
@@ -57,6 +57,6 @@ spec:
     matchLabels:
       app: resume-backend
   endpoints:
-    - port: api-port
-      path: /metrics
-      interval: 2m
+  - port: api-port
+    path: /metrics
+    interval: 2m

@@ -1,8 +1,35 @@
-server:
-  replicas: 1
-  service:
-    type: ClusterIP
+applicationSet:
   metrics:
     enabled: true
+    path: /metrics
     serviceMonitor:
       enabled: true
+      autodetect: false
+      interval: 2m
+      annotations: {}
+      additionalLabels: {}
+      namespace: argocd
+
+controller:
+  metrics:
+    enabled: true
+    path: /metrics
+    serviceMonitor:
+      enabled: true
+      autodetect: false
+      interval: 2m
+      annotations: {}
+      additionalLabels: {}
+      namespace: argocd
+
+server:
+  metrics:
+    enabled: true
+    path: /metrics
+    serviceMonitor:
+      enabled: true
+      autodetect: false
+      interval: 2m
+      annotations: {}
+      additionalLabels: {}
+      namespace: argocd

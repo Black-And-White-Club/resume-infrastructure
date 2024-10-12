@@ -3,3 +3,4 @@ controller:
     enabled: true
     serviceMonitor:
       enabled: true
+      scrapeInterval: 2m

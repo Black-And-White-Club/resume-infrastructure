@@ -10,7 +10,7 @@ metadata:
 spec:
   endpoints:
   - port: metrics             
-    interval: 2m               
+    interval: {{ .Values.controller.metrics.serviceMonitor.scrapeInterval }}
   namespaceSelector:
     matchNames:
       - resume-app               
