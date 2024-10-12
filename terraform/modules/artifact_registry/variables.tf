@@ -1,7 +1,6 @@
-variable "project_id" {
+variable "gcp_project_id" {
   description = "GCP Project ID"
   type        = string
-  default     = "resume-portfolio-project"
 }
 
 variable "region" {
