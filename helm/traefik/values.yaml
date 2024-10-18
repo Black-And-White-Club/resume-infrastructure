@@ -1,0 +1,12 @@
+ingressRoute:
+  dashboard:
+    enabled: true
+
+ingressClass:
+  enabled: true
+  isDefaultClass: true
+  name: traefik-helm
+
+logs:
+  access:
+    enabled: true

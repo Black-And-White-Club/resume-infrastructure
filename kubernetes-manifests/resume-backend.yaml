@@ -14,7 +14,6 @@ spec:
       protocol: TCP
       port: 8000
       targetPort: 8000
-  type: ClusterIP
 
 ---
 apiVersion: apps/v1
@@ -40,7 +39,19 @@ spec:
             - containerPort: 8000
           env:
             - name: ALLOWED_ORIGINS
-              value: "http://resume-app.local"
+              value: resume-frontend.test
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8000
+            initialDelaySeconds: 30
+            timeoutSeconds: 1
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: 8000
+            initialDelaySeconds: 30
+            timeoutSeconds: 1
 
 ---
 apiVersion: monitoring.coreos.com/v1
@@ -57,6 +68,3 @@ spec:
     matchLabels:
       app: resume-backend
   endpoints:
-  - port: api-port
-    path: /metrics
-    interval: 2m
