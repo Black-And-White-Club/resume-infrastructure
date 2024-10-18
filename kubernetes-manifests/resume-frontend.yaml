@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
         - name: resume-frontend
-          image: us-central1-docker.pkg.dev/${GCP_PROJECT_ID}/portfolio-app-images/resume-frontend:7123
+          image: us-central1-docker.pkg.dev/${GCP_PROJECT_ID}/portfolio-app-images/resume-frontend:039598c
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
