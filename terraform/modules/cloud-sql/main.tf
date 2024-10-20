@@ -5,7 +5,7 @@ resource "google_sql_database_instance" "default" {
   project          = var.project_id
 
   settings {
-    tier              = "db-custom-1-1792"
+    tier              = "db-f1-micro" # Smallest predefined machine type (shared vCPU, 0.6GB RAM)
     availability_type = "ZONAL"
 
     backup_configuration {
@@ -36,7 +36,6 @@ resource "google_sql_database_instance" "default" {
 }
 
 resource "google_sql_database" "default" {
-
   name      = var.database_name
   instance  = google_sql_database_instance.default.name
   project   = var.project_id
@@ -50,4 +49,3 @@ resource "google_sql_user" "default" {
   project  = var.project_id
   password = var.db_password
 }
-
