@@ -19,7 +19,7 @@ resource "google_sql_database_instance" "default" {
 
     disk_autoresize = true
     disk_size       = 10
-    disk_type       = "PD_STANDARD"
+    disk_type       = "PD_HDD"
 
     location_preference {
       zone = "us-central1-c"
