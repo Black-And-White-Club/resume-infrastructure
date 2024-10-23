@@ -1,3 +1,11 @@
+terraform {
+  required_providers {
+    google = {
+      source  = "hashicorp/google"
+      version = "~> 6.7.0"
+    }
+  }
+}
 resource "google_sql_database_instance" "default" {
   name             = var.instance_name
   database_version = "MYSQL_8_4"

@@ -2,59 +2,65 @@ terraform {
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = "~> 6.5.0"
+      version = "~> 6.7.0"
     }
   }
 }
 
 provider "google" {
-  project = var.gcp_project_id
+  project = var.project_id
   region  = var.region
 }
 
-resource "google_service_account" "service_account" {
-  account_id   = var.service_account_id
-  display_name = var.service_account_display_name
+# Use data source to fetch existing service account
+data "google_service_account" "default" {
+  account_id = var.service_account_id
 }
 
 resource "google_project_iam_member" "gke_role" {
-  project = var.gcp_project_id
+  project = var.project_id
   role    = "roles/container.admin"
-  member  = "serviceAccount:${var.service_account_email}"
+  member  = "serviceAccount:${data.google_service_account.default.email}"
 }
 
 resource "google_project_iam_member" "compute_engine_role" {
-  project = var.gcp_project_id
+  project = var.project_id
   role    = "roles/compute.admin"
-  member  = "serviceAccount:${var.service_account_email}"
+  member  = "serviceAccount:${data.google_service_account.default.email}"
 }
 
 resource "google_project_iam_member" "cloudsql_role" {
-  project = var.gcp_project_id
+  project = var.project_id
   role    = "roles/cloudsql.admin"
-  member  = "serviceAccount:${var.service_account_email}"
+  member  = "serviceAccount:${data.google_service_account.default.email}"
 }
 
 resource "google_project_iam_member" "cloud_storage_role" {
-  project = var.gcp_project_id
+  project = var.project_id
   role    = "roles/storage.objectAdmin"
-  member  = "serviceAccount:${var.service_account_email}"
+  member  = "serviceAccount:${data.google_service_account.default.email}"
 }
 
 resource "google_project_iam_member" "artifact_registry_role" {
-  project = var.gcp_project_id
+  project = var.project_id
   role    = "roles/artifactregistry.admin"
-  member  = "serviceAccount:${var.service_account_email}"
+  member  = "serviceAccount:${data.google_service_account.default.email}"
 }
 
 resource "google_project_iam_member" "compute_network_admin_role" {
-  project = var.gcp_project_id
+  project = var.project_id
   role    = "roles/compute.networkAdmin"
-  member  = "serviceAccount:${var.service_account_email}"
+  member  = "serviceAccount:${data.google_service_account.default.email}"
 }
 
 resource "google_project_iam_member" "iam_service_account_user_role" {
-  project = var.gcp_project_id
+  project = var.project_id
   role    = "roles/iam.serviceAccountUser"
-  member  = "serviceAccount:${var.service_account_email}"
+  member  = "serviceAccount:${data.google_service_account.default.email}"
 }
+resource "google_project_iam_member" "cert_manager_role" {
+  project = var.project_id
+  role    = "roles/certificatemanager.owner"
+  member  = "serviceAccount:${data.google_service_account.default.email}"
+}
+

@@ -1,4 +1,4 @@
-variable "gcp_project_id" {
+variable "project_id" {
   description = "The ID of the Google Cloud project"
   type        = string
 }
@@ -17,7 +17,6 @@ variable "service_account_id" {
 variable "service_account_display_name" {
   description = "The display name for the service account"
   type        = string
-  default     = "Resume App Service Account"
 }
 
 variable "service_account_email" {

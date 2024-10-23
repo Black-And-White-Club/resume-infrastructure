@@ -17,6 +17,15 @@ spec:
   type: ClusterIP
 
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: resume-frontend-config
+  namespace: resume-app
+data:
+  API_URL: "https://resume-frontend.test"
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -38,3 +47,9 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
+          env:
+            - name: API_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: resume-frontend-config
+                  key: API_URL

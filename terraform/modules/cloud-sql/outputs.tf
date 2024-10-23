@@ -20,3 +20,8 @@ output "user_name" {
   value       = google_sql_user.default.name
   description = "Name of the created user"
 }
+
+output "mysql_user_email" {
+  value       = google_sql_user.default.email
+  description = "Email of the created user"
+}
