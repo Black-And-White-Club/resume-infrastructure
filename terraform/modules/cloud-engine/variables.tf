@@ -14,3 +14,8 @@ variable "region" {
   description = "The region to deploy all GCP resources"
   default     = "us-central1"
 }
+
+variable "service_account_email" {
+  description = "Service account email"
+  type        = string
+}

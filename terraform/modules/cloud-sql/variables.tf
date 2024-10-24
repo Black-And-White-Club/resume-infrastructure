@@ -1,7 +1,7 @@
 variable "instance_name" {
   description = "Name of the Cloud SQL instance"
   type        = string
-  default     = "resume_app_instance"
+  default     = "resume-app-instance"
 }
 
 variable "region" {

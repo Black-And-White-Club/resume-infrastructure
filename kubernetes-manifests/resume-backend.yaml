@@ -33,14 +33,14 @@ spec:
     spec:
       containers:
         - name: resume-backend
-          image: resume-backend:31333bb
+          image: resume-backend:1.0
           # image: us-central1-docker.pkg.dev/${GCP_PROJECT_ID}/portfolio-app-images/resume-backend:31333bb
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
           env:
             - name: ALLOWED_ORIGINS
-              value: resume-frontend.test
+              value: jaromero.cloud
           livenessProbe:
             httpGet:
               path: /healthz
