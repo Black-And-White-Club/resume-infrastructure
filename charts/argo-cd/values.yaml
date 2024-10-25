@@ -68,15 +68,5 @@ server:
         endpoints:
           - path: /metrics
   config:
-    secretkey: "{{ tpl (lookup \"v1\" \"Secret\" \"argocd\" \"argocd-server-secrets\").data.server.secretkey | b64enc | quote }}"
-    address: "{{ tpl (lookup \"v1\" \"Secret\" \"argocd\" \"argocd-server-secrets\").data.server.address | quote }}"
-configs:
-  rbac:
-    create: true
-    annotations: {}
-    policy.default: ""
-    policy.csv: |
-      p, role:admin-role, *, * 
-      g, system:serviceaccounts:argocd, role:admin-role, *, *
-    scopes: "[groups]"
-    policy.matchMode: "glob"
+    secretkey: '{{ tpl (lookup "v1" "Secret" "argocd" "argocd-server-secrets").data.server.secretkey | b64enc | quote }}'
+    address: '{{ tpl (lookup "v1" "Secret" "argocd" "argocd-server-secrets").data.server.address | quote }}'
