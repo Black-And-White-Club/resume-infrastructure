@@ -76,19 +76,7 @@ configs:
     annotations: {}
     policy.default: ""
     policy.csv: |
-      p, role:cached-repos-role, repositories, get
-      p, role:cached-repos-role, clusters, get
-      g, system:authenticated, role:cached-repos-role, repositories, get
-      g, system:authenticated, role:cached-repos-role, clusters, get
-      p, role:read-only-role, applications, get, list, watch
-      p, role:read-only-role, appprojects, get, list, watch
-      g, system:authenticated, role:read-only-role, applications, get, list, watch
-      g, system:authenticated, role:read-only-role, appprojects, get, list, watch
-      p, role:admin-role, *, *
+      p, role:admin-role, *, * 
       g, system:serviceaccounts:argocd, role:admin-role, *, *
-      p, role:argocd-application-controller, applications, create, get, list, watch, update, patch, delete
-      p, role:argocd-application-controller, appprojects, get, list, watch
-      p, role:argocd-application-controller, clusters, get, list, watch
-      p, role:argocd-repo-server, repositories, create, get, list, watch, update, delete, patch
     scopes: "[groups]"
     policy.matchMode: "glob"
