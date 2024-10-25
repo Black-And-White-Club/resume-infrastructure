@@ -53,6 +53,7 @@ server:
     type: NodePort
     port: 443
     targetPort: 443
+    nodePort: 31646
   metrics:
     <<: *metricsConfig
     serviceMonitor:
