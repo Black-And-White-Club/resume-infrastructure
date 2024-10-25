@@ -49,6 +49,10 @@ controller:
           - path: /metrics
 
 server:
+  service:
+    type: NodePort
+    port: 443
+    targetPort: 443
   metrics:
     <<: *metricsConfig
     serviceMonitor:
