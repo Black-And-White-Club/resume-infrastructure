@@ -10,6 +10,7 @@ spec:
   sources:
     - repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
       targetRevision: main
+      path: kubernetes-manifests
       directory:
         include: "kubernetes-manifests/argocd-app*"
     - repoURL: https://argoproj.github.io/argo-helm
