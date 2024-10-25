@@ -1,35 +1,65 @@
+metricsConfig: &metricsConfig
+  enabled: true
+  path: /metrics
+  serviceMonitor: &serviceMonitorConfig
+    enabled: true
+    autodetect: false
+    interval: 2m
+    annotations: {}
+    additionalLabels: {}
+    namespace: argocd
+    apiVersion: monitoring.coreos.com/v1
+    kind: ServiceMonitor
+    labels:
+      release: prometheus
+    spec:
+      endpoints:
+        - port: metrics
+
 applicationSet:
   metrics:
-    enabled: true
-    path: /metrics
+    <<: *metricsConfig
     serviceMonitor:
-      enabled: true
-      autodetect: false
-      interval: 2m
-      annotations: {}
-      additionalLabels: {}
-      namespace: argocd
+      <<: *serviceMonitorConfig
+      metadata:
+        name: applicationSet-metrics
+        namespace: argocd
+      spec:
+        selector:
+          matchLabels:
+            app.kubernetes.io/part-of: argocd
+            app.kubernetes.io/component: applicationSet
+        endpoints:
+          - path: /metrics
 
 controller:
   metrics:
-    enabled: true
-    path: /metrics
+    <<: *metricsConfig
     serviceMonitor:
-      enabled: true
-      autodetect: false
-      interval: 2m
-      annotations: {}
-      additionalLabels: {}
-      namespace: argocd
+      <<: *serviceMonitorConfig
+      metadata:
+        name: controller-metrics
+        namespace: argocd
+      spec:
+        selector:
+          matchLabels:
+            app.kubernetes.io/part-of: argocd
+            app.kubernetes.io/component: controller
+        endpoints:
+          - path: /metrics
 
 server:
   metrics:
-    enabled: true
-    path: /metrics
+    <<: *metricsConfig
     serviceMonitor:
-      enabled: true
-      autodetect: false
-      interval: 2m
-      annotations: {}
-      additionalLabels: {}
-      namespace: argocd
+      <<: *serviceMonitorConfig
+      metadata:
+        name: server-metrics
+        namespace: argocd
+      spec:
+        selector:
+          matchLabels:
+            app.kubernetes.io/part-of: argocd
+            app.kubernetes.io/component: server
+        endpoints:
+          - path: /metrics
