@@ -67,3 +67,17 @@ server:
             app.kubernetes.io/component: server
         endpoints:
           - path: /metrics
+# RBAC configuration
+rbac:
+  policy: |
+    g, argocd-application-controller, role:argocd-secret-reader, argocd, *, */*
+  clusterRoles:
+    argocd-secret-reader: |-
+      apiVersion: rbac.authorization.k8s.io/v1
+      kind: ClusterRole
+      metadata:
+        name: argocd-secret-reader
+      rules:
+      - apiGroups: [""]
+        resources: ["secrets"]
+        verbs: ["get", "list", "watch"]
