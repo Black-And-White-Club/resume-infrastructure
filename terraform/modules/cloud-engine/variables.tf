@@ -19,3 +19,9 @@ variable "service_account_email" {
   description = "Service account email"
   type        = string
 }
+
+variable "local_ip" {
+  description = "My IP"
+  type        = list(string)
+  sensitive   = true
+}

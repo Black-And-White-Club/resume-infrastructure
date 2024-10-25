@@ -1,19 +1,8 @@
-resource "google_compute_network" "main" {
-  name                    = "resume-project-network"
-  auto_create_subnetworks = false
-  project                 = var.project_id
-}
-
-resource "google_compute_subnetwork" "main" {
-  name          = "resume-project-subnet"
-  ip_cidr_range = "10.128.0.0/20"
-  region        = var.region
-  network       = google_compute_network.main.id
-  project       = var.project_id
-}
-
 resource "google_compute_instance" "resume-project-vm" {
   project = var.project_id
+  name    = "resume-project-vm"
+  zone    = "us-central1-a"
+
   boot_disk {
     auto_delete = true
     device_name = "instance-20241024-123846"
@@ -27,9 +16,10 @@ resource "google_compute_instance" "resume-project-vm" {
     mode = "READ_WRITE"
   }
 
-  can_ip_forward      = true
-  deletion_protection = false
-  enable_display      = true
+  can_ip_forward            = true
+  deletion_protection       = false
+  enable_display            = true
+  allow_stopping_for_update = true
 
   labels = {
     goog-ec-src           = "vm_add-tf"
@@ -42,28 +32,32 @@ resource "google_compute_instance" "resume-project-vm" {
     enable-osconfig = "TRUE"
   }
 
-  name = "resume-project-vm"
-
+  # Reference the subnetwork created in network.tf
   network_interface {
+    subnetwork = google_compute_subnetwork.main.id
     access_config {
       network_tier = "PREMIUM"
     }
-
-    queue_count = 0
-    stack_type  = "IPV4_ONLY"
-    subnetwork  = "projects/resume-portfolio-project/regions/us-central1/subnetworks/default"
   }
 
   scheduling {
-    automatic_restart   = false
-    on_host_maintenance = "TERMINATE"
-    preemptible         = true
-    provisioning_model  = "SPOT"
+    automatic_restart           = false
+    on_host_maintenance         = "TERMINATE"
+    preemptible                 = true
+    provisioning_model          = "SPOT"
+    instance_termination_action = "STOP"
   }
 
   service_account {
-    email  = var.service_account_email
-    scopes = ["https://www.googleapis.com/auth/devstorage.read_only", "https://www.googleapis.com/auth/logging.write", "https://www.googleapis.com/auth/monitoring.write", "https://www.googleapis.com/auth/service.management.readonly", "https://www.googleapis.com/auth/servicecontrol", "https://www.googleapis.com/auth/trace.append"]
+    email = var.service_account_email
+    scopes = [
+      "https://www.googleapis.com/auth/devstorage.read_only",
+      "https://www.googleapis.com/auth/logging.write",
+      "https://www.googleapis.com/auth/monitoring.write",
+      "https://www.googleapis.com/auth/service.management.readonly",
+      "https://www.googleapis.com/auth/servicecontrol",
+      "https://www.googleapis.com/auth/trace.append"
+    ]
   }
 
   shielded_instance_config {
@@ -72,49 +66,27 @@ resource "google_compute_instance" "resume-project-vm" {
     enable_vtpm                 = true
   }
 
-  tags = ["argocd", "backend-app", "grafana", "http-server", "https-server", "kubernetes-node", "lb-health-check", "prometheus", "web-app"]
-  zone = "us-central1-a"
-}
+  # Tags for firewall rules
+  tags = [
+    "argocd",
+    "backend-app",
+    "grafana",
+    "http-server",
+    "https-server",
+    "kubernetes-node",
+    "lb-health-check",
+    "prometheus",
+    "web-app"
+  ]
 
-
-resource "google_compute_firewall" "allow-https" {
-  name    = "allow-https"
-  network = google_compute_network.main.name
-  project = var.project_id
-
-  allow {
-    protocol = "tcp"
-    ports    = ["443"]
+  # Provisioning script to set up Kubernetes
+  provisioner "remote-exec" {
+    script = "setup-kubernetes.sh"
+    connection {
+      type        = "ssh"
+      user        = "jace"
+      host        = self.network_interface.0.access_config.0.nat_ip
+      private_key = file("~/.ssh/google_compute_engine")
+    }
   }
-
-  source_ranges = ["0.0.0.0/0"]
-  target_tags   = ["web-app"]
-}
-
-resource "google_compute_firewall" "allow-backend-traffic" {
-  name    = "allow-backend-traffic"
-  network = google_compute_network.main.name
-  project = var.project_id
-
-  allow {
-    protocol = "tcp"
-    ports    = ["8000"]
-  }
-
-  source_ranges = ["0.0.0.0/0"] # Consider restricting this in production
-  target_tags   = ["backend-app"]
-}
-
-resource "google_compute_firewall" "allow-prometheus-scraping" {
-  name    = "allow-prometheus-scraping"
-  network = google_compute_network.main.name
-  project = var.project_id
-
-  allow {
-    protocol = "tcp"
-    ports    = ["8000"] # Port used by the ServiceMonitor
-  }
-
-  source_ranges = ["10.128.0.0/20"] # Adjust this to your pod/service CIDR range
-  target_tags   = ["backend-app"]
 }

@@ -12,7 +12,6 @@ provider "google" {
   region  = var.region
 }
 
-# Use data source to fetch existing service account
 data "google_service_account" "default" {
   account_id = var.service_account_id
 }
@@ -26,6 +25,12 @@ resource "google_project_iam_member" "gke_role" {
 resource "google_project_iam_member" "compute_engine_role" {
   project = var.project_id
   role    = "roles/compute.admin"
+  member  = "serviceAccount:${data.google_service_account.default.email}"
+}
+
+resource "google_project_iam_member" "compute_os_login_role" {
+  project = var.project_id
+  role    = "roles/compute.osAdminLogin"
   member  = "serviceAccount:${data.google_service_account.default.email}"
 }
 
