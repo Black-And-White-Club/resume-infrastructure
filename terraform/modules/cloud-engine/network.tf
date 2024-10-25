@@ -22,7 +22,7 @@ resource "google_compute_firewall" "allow-prometheus-scraping" {
 
   allow {
     protocol = "tcp"
-    ports    = ["9090"] # Adjust if using a different port for Prometheus
+    ports    = ["9090"]
   }
 
   source_ranges = ["10.128.0.0/20"] # Restrict to internal subnet for security
@@ -54,7 +54,6 @@ resource "google_compute_firewall" "allow-kubernetes-internal" {
     ports    = ["10250", "10248", "6443"] # Kubelet, health check, and API server ports
   }
 
-  # You can add UDP rules here as well if needed
   allow {
     protocol = "udp"
     ports    = ["8472"] # Flannel VXLAN traffic
@@ -76,4 +75,18 @@ resource "google_compute_firewall" "allow-ssh" {
 
   source_ranges = var.local_ip
   target_tags   = ["kubernetes-node"]
+}
+
+resource "google_compute_firewall" "allow-argocd-external" {
+  name    = "allow-argocd-external"
+  network = google_compute_network.main.name
+  project = var.project_id
+
+  allow {
+    protocol = "tcp"
+    ports    = ["31646"] # ArgoCD HTTPS NodePort
+  }
+
+  source_ranges = var.local_ip
+  target_tags   = ["argocd"]
 }

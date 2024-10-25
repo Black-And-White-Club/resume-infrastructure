@@ -36,7 +36,7 @@ resource "google_compute_instance" "resume-project-vm" {
   network_interface {
     subnetwork = google_compute_subnetwork.main.id
     access_config {
-      network_tier = "PREMIUM"
+      network_tier = "STANDARD"
     }
   }
 
