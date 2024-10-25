@@ -2,16 +2,15 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: ArgoCD
+  namespace: argocd
 spec:
   destination:
-    name: ""
     namespace: argocd
     server: https://10.128.0.16:6443
-  source:
-    path: ""
-    repoURL: ""
-    targetRevision: HEAD
   sources:
+    - repoURL: https://github.com/Black-And-White-Club/resume-infrastructure
+      path: kubernetes-manifests/argocd-app.yaml
+      targetRevision: HEAD
     - repoURL: https://argoproj.github.io/argo-helm
       chart: argo-cd
       targetRevision: ""
@@ -25,6 +24,6 @@ spec:
   syncPolicy:
     automated:
       prune: false
-      selfHeal: false
+      selfHeal: true
     syncOptions:
       - CreateNamespace=true
