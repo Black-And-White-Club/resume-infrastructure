@@ -67,6 +67,9 @@ server:
             app.kubernetes.io/component: server
         endpoints:
           - path: /metrics
+  config:
+    secretkey: {{ tpl (lookup "v1" "Secret" "argocd" "argocd-server-secrets").data.server\.secretkey | b64enc | quote }}
+    address: {{ tpl (lookup "v1" "Secret" "argocd" "argocd-server-secrets").data.server\.address | quote }}
 # RBAC configuration
 rbac:
   policy: |

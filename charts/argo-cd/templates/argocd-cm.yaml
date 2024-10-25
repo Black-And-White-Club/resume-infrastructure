@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: argocd-cm
-  namespace: argocd
-data:
-  server.secretkey: {{ tpl (lookup "v1" "Secret" "argocd" "argocd-server-secrets").data.server\.secretkey | b64enc | quote }}
-  server.address: {{ tpl (lookup "v1" "Secret" "argocd" "argocd-server-secrets").data.server\.address | quote }}
