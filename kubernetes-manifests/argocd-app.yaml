@@ -1,13 +1,30 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
+metadata:
+  name: ArgoCD
 spec:
+  destination:
+    name: ""
+    namespace: argocd
+    server: https://10.128.0.16:6443
+  source:
+    path: ""
+    repoURL: ""
+    targetRevision: HEAD
   sources:
-    - repoURL: "https://argoproj.github.io/argo-helm"
+    - repoURL: https://argoproj.github.io/argo-helm
       chart: argo-cd
-      targetRevision: 7.6.12
+      targetRevision: ""
       helm:
         valueFiles:
           - $values/charts/argo-cd/values.yaml
-    - repoURL: "https://github.com/Black-And-White-Club/resume-infrastructure.git"
+    - repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
       targetRevision: main
       ref: values
+  project: resume-portfolio
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true
