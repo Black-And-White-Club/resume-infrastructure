@@ -70,33 +70,7 @@ server:
   config:
     secretkey: "{{ tpl (lookup \"v1\" \"Secret\" \"argocd\" \"argocd-server-secrets\").data.server.secretkey | b64enc | quote }}"
     address: "{{ tpl (lookup \"v1\" \"Secret\" \"argocd\" \"argocd-server-secrets\").data.server.address | quote }}"
-# RBAC configuration
-rbac:
-  policy: |
-    g, argocd-application-controller, role:argocd-secret-reader, argocd, *, */*
-  clusterRoles:
-    argocd-secret-reader: |-
-      apiVersion: rbac.authorization.k8s.io/v1
-      kind: ClusterRole
-      metadata:
-        name: argocd-secret-reader
-      rules:
-      - apiGroups: [""]
-        resources: ["secrets"]
-        verbs: ["get", "list", "watch"]
-  roles:
-    argocd-repo-server: |- 
-      apiVersion: rbac.authorization.k8s.io/v1
-      kind: Role
-      metadata:
-        name: argocd-repo-server
-      rules:
-      - apiGroups: [""]
-        resources: ["secrets", "configmaps"]
-        verbs: ["get", "list", "watch"]
-      - apiGroups: ["argoproj.io"]
-        resources: ["repositories"]
-        verbs: ["create", "get", "list", "watch", "update", "delete", "patch"]
-      - apiGroups: [""]
-        resources: ["events"]
-        verbs: ["create", "list"]
+configs:
+  rbac:
+    policy.csv: |
+      p, role:argocd-repo-server, repositories, create, get, list, watch, update, delete, patch 
