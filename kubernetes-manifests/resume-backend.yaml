@@ -36,7 +36,7 @@ spec:
       containers:
         - name: resume-backend
           # image: resume-backend:3f52a15
-          image: scratch # Use a dummy image here
+          image: alpine # Use a dummy image here
           command: ["/bin/sh", "-c"]
           args:
             - |
@@ -48,7 +48,7 @@ spec:
           envFrom:
             - secretRef:
                 name: project-id
-          imagePullPolicy: Never
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
           env:

@@ -37,7 +37,7 @@ spec:
       containers:
         - name: resume-frontend
           # image: resume-frontend:b6638c4
-          image: scratch
+          image: alpine
           command: ["/bin/sh", "-c"]
           args:
             - |
@@ -48,6 +48,6 @@ spec:
           envFrom:
             - secretRef:
                 name: project-id
-          imagePullPolicy: Never
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000
