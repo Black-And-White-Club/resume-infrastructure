@@ -1,9 +1,0 @@
-apiVersion: networking.gke.io/v1
-kind: ManagedCertificate
-metadata:
-  name: resume-app-cert
-  namespace: resume-app
-spec:
-  domains:
-    - jaromero.cloud
-    - www.jaromero.cloud
