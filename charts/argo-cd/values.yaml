@@ -51,6 +51,8 @@ controller:
           - path: /metrics
 
 server:
+  clusterRole:
+    enabled: true
   service:
     type: NodePort
     port: 443
