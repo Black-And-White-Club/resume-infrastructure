@@ -40,6 +40,7 @@ spec:
           command: ["/bin/sh", "-c"]
           args:
             - |
+              apk add docker-cli
               GCP_PROJECT_ID=$(echo $GCP_PROJECT_ID | tr '[:upper:]' '[:lower:]')
               IMAGE_NAME="us-central1-docker.pkg.dev/${GCP_PROJECT_ID}/portfolio-app-images-charts/resume-backend:3f52a15"
               echo "Pulling image: ${IMAGE_NAME}"
