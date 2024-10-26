@@ -36,7 +36,7 @@ spec:
       containers:
         - name: resume-backend
           # image: resume-backend:3f52a15
-          image: us-central1-docker.pkg.dev/dummy-image # Use a dummy image here
+          image: scratch # Use a dummy image here
           command: ["/bin/sh", "-c"]
           args:
             - |
