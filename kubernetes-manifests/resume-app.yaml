@@ -10,12 +10,12 @@ spec:
   sources:
     - repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
       targetRevision: main
-      path: kubernetes-manifests
+      path: kubernetes-manifests/base
       directory:
         include: "resume-backend.yaml"
     - repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
       targetRevision: main
-      path: kubernetes-manifests
+      path: kubernetes-manifests/base
       directory:
         include: "resume-frontend.yaml"
   project: resume-portfolio

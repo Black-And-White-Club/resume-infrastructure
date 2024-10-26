@@ -37,18 +37,7 @@ spec:
       containers:
         - name: resume-frontend
           # image: resume-frontend:b6638c4
-          image: alpine
-          command: ["/bin/sh", "-c"]
-          args:
-            - |
-              apk add docker-cli
-              GCP_PROJECT_ID=$(echo $GCP_PROJECT_ID | tr '[:upper:]' '[:lower:]')
-              IMAGE_NAME="us-central1-docker.pkg.dev/${GCP_PROJECT_ID}/portfolio-app-images-charts/resume-frontend:dd25649"
-              echo "Pulling image: ${IMAGE_NAME}"
-              docker pull "${IMAGE_NAME}"
-          envFrom:
-            - secretRef:
-                name: project-id
+          image: us-central1-docker.pkg.dev/REPLACE_PROJECT_ID/portfolio-app-images-charts/resume-frontend:b6638c4
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000

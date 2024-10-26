@@ -1,0 +1,18 @@
+resources:
+  - resume-backend.yaml
+  - resume-frontend.yaml
+
+vars:
+  - name: REPLACE_PROJECT_ID
+    objref:
+      kind: Secret
+      name: project-id
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.GCP_PROJECT_ID
+
+images:
+  - name: us-central1-docker.pkg.dev/*/portfolio-app-images-charts/resume-frontend
+    newName: us-central1-docker.pkg.dev/$(REPLACE_PROJECT_ID)/portfolio-app-images-charts/resume-frontend
+  - name: us-central1-docker.pkg.dev/*/portfolio-app-images-charts/resume-backend
+    newName: us-central1-docker.pkg.dev/$(REPLACE_PROJECT_ID)/portfolio-app-images-charts/resume-backend
