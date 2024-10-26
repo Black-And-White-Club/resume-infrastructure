@@ -39,7 +39,7 @@ spec:
           image: us-central1-docker.pkg.dev/$GCP_PROJECT_ID/portfolio-app-images-charts/resume-backend:3f52a15
           envFrom:
             - secretRef:
-              name: project-id
+                name: project-id
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
