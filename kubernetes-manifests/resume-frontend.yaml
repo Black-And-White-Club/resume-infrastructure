@@ -36,7 +36,7 @@ spec:
         - name: gcp-credentials
       containers:
         - name: resume-frontend
-          # image: resume-frontend:dd25649
+          # image: resume-frontend:b6638c4
           image: us-central1-docker.pkg.dev/dummy-image # Use a dummy image
           command: ["/bin/sh", "-c"]
           args:
