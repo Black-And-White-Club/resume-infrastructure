@@ -33,6 +33,8 @@ applicationSet:
           - path: /metrics
 
 controller:
+  clusterRole:
+    enabled: true
   metrics:
     <<: *metricsConfig
     serviceMonitor:
