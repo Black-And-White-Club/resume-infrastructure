@@ -17,6 +17,8 @@ metricsConfig: &metricsConfig
         - port: metrics
 
 applicationSet:
+  clusterRole:
+    enabled: true
   metrics:
     <<: *metricsConfig
     serviceMonitor:
