@@ -68,14 +68,3 @@ server:
             app.kubernetes.io/component: server
         endpoints:
           - path: /metrics
-  config:
-    secretkey: '{{ tpl (lookup "v1" "Secret" "argocd" "argocd-server-secrets").data.server.secretkey | b64enc | quote }}'
-    address: '{{ tpl (lookup "v1" "Secret" "argocd" "argocd-server-secrets").data.server.address | quote }}'
-configs:
-  rbac:
-    policy.csv: |
-      p, role:org-admin, applications, *, */*, allow
-      p, role:org-admin, clusters, get, *, allow
-      p, role:org-admin, repositories, *, *, allow
-      p, role:org-admin, logs, get, *, allow
-      p, role:org-admin, exec, create, */*, allow
