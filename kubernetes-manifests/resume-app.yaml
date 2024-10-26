@@ -4,16 +4,16 @@ metadata:
   name: resume-app
   namespace: resume-app
 spec:
-  project: resume-portfolio
+  destination:
+    server: https://10.128.0.16:6443
+    namespace: resume-app
   source:
     repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
     targetRevision: main
     path: kubernetes-manifests
     directory:
       include: "{resume-backend.yaml, resume-frontend.yaml}"
-  destination:
-    server: https://10.128.0.16:6443
-    namespace: resume-app
+  project: resume-portfolio
   syncPolicy:
     automated:
       prune: true
