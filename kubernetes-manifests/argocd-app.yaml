@@ -19,7 +19,6 @@ spec:
       helm:
         valueFiles:
           - $values/charts/argo-cd/values.yaml
-          - $values/charts/argo-cd/templates/argocd-rbac-cm.yaml
     - repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
       targetRevision: main
       ref: values

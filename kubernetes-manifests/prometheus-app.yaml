@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus
+  namespace: prometheus
+spec:
+  sources:
+    - repoURL: https://prometheus-community.github.io/helm-charts
+      chart: prometheus-community/kube-prometheus-stack
+      targetRevision: 65.5.0
+      helm:
+        valueFiles:
+          - $values/charts/prometheus/values.yaml
+    - repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
+      targetRevision: main
+      ref: values
+  project: resume-portfolio
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
