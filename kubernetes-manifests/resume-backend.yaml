@@ -31,6 +31,8 @@ spec:
       labels:
         app: resume-backend
     spec:
+      imagePullSecrets:
+        - name: gcp-credentials
       containers:
         - name: resume-backend
           # image: resume-backend:3f52a15

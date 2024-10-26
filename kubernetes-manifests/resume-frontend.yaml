@@ -32,6 +32,8 @@ spec:
       labels:
         app: resume-frontend
     spec:
+      imagePullSecrets:
+        - name: gcp-credentials
       containers:
         - name: resume-frontend
           # image: resume-frontend:dd25649
