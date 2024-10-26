@@ -77,16 +77,16 @@ resource "google_compute_firewall" "allow-ssh" {
   target_tags   = ["kubernetes-node"]
 }
 
-resource "google_compute_firewall" "allow-argocd-external" {
-  name    = "allow-argocd-external"
+resource "google_compute_firewall" "allow-argocd-prometheus-external" {
+  name    = "allow-argocd-prometheus-external"
   network = google_compute_network.main.name
   project = var.project_id
 
   allow {
     protocol = "tcp"
-    ports    = ["31646"] # ArgoCD HTTPS NodePort
+    ports    = ["31646", "30195"] # ArgoCD HTTPS NodePort
   }
 
   source_ranges = var.local_ip
-  target_tags   = ["argocd"]
+  target_tags   = ["argocd", "prometheus"]
 }
