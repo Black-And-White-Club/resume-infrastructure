@@ -13,7 +13,7 @@ spec:
   ports:
     - name: web-port
       port: 80
-      targetPort: 8081
+      targetPort: 3000
   type: ClusterIP
 
 ---
@@ -38,4 +38,4 @@ spec:
           image: us-central1-docker.pkg.dev/${GCP_PROJECT_ID}/portfolio-app-images-charts/resume-frontend:cf89e32
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 8081
+            - containerPort: 3000
