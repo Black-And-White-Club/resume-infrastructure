@@ -12,7 +12,7 @@ spec:
     targetRevision: main
     path: kubernetes-manifests
     directory:
-      include: "{resume-backend.yaml, resume-frontend.yaml}"
+      include: "resume-*end.yaml"
   project: resume-portfolio
   syncPolicy:
     automated:
