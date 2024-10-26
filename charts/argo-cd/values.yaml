@@ -16,9 +16,10 @@ metricsConfig: &metricsConfig
       endpoints:
         - port: metrics
 
+clusterRole:
+  enabled: true
+
 applicationSet:
-  clusterRole:
-    enabled: true
   metrics:
     <<: *metricsConfig
     serviceMonitor:
@@ -35,8 +36,6 @@ applicationSet:
           - path: /metrics
 
 controller:
-  clusterRole:
-    enabled: true
   metrics:
     <<: *metricsConfig
     serviceMonitor:
@@ -53,8 +52,6 @@ controller:
           - path: /metrics
 
 server:
-  clusterRole:
-    enabled: true
   service:
     type: NodePort
     port: 443
