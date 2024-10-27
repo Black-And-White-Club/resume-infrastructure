@@ -6,6 +6,7 @@ replacements:
   - source:
       kind: Secret
       name: project-id
+      namespace: resume-app
       fieldPath: data.GCP_PROJECT_ID
     targets:
       - select:
