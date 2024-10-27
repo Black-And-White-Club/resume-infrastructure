@@ -37,7 +37,7 @@ resource "google_compute_firewall" "allow-argocd-internal" {
 
   allow {
     protocol = "tcp"
-    ports    = ["8070", "443"] # ArgoCD API and web interface ports
+    ports    = ["8080", "443"] # ArgoCD API and web interface ports
   }
 
   source_ranges = ["10.128.0.0/20"] # Internal VPC CIDR range
@@ -54,12 +54,7 @@ resource "google_compute_firewall" "allow-kubernetes-internal" {
     ports    = ["10250", "10248", "6443"] # Kubelet, health check, and API server ports
   }
 
-  allow {
-    protocol = "udp"
-    ports    = ["8472"] # Flannel VXLAN traffic
-  }
-
-
+  # Removed the UDP port for Flannel (8472)
   source_ranges = ["10.128.0.0/20"]
   target_tags   = ["kubernetes-node"]
 }
@@ -68,6 +63,7 @@ resource "google_compute_firewall" "allow-ssh" {
   name    = "allow-ssh"
   network = google_compute_network.main.name
   project = var.project_id
+
   allow {
     protocol = "tcp"
     ports    = ["22"]
@@ -89,4 +85,11 @@ resource "google_compute_firewall" "allow-argocd-prometheus-external" {
 
   source_ranges = var.local_ip
   target_tags   = ["argocd", "prometheus"]
+}
+
+resource "google_compute_address" "static_ip" {
+  name         = "resume-project-vm-instance"
+  region       = var.region
+  project      = var.project_id
+  network_tier = "STANDARD"
 }

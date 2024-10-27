@@ -5,7 +5,6 @@ resource "google_compute_instance" "resume-project-vm" {
 
   boot_disk {
     auto_delete = true
-    device_name = "instance-20241024-123846"
 
     initialize_params {
       image = "projects/debian-cloud/global/images/debian-12-bookworm-v20241009"
@@ -34,9 +33,10 @@ resource "google_compute_instance" "resume-project-vm" {
 
   # Reference the subnetwork created in network.tf
   network_interface {
+    network    = google_compute_network.main.id
     subnetwork = google_compute_subnetwork.main.id
     access_config {
-      network_tier = "STANDARD"
+      nat_ip = google_compute_address.static_ip.address
     }
   }
 
@@ -78,15 +78,4 @@ resource "google_compute_instance" "resume-project-vm" {
     "prometheus",
     "web-app"
   ]
-
-  # Provisioning script to set up Kubernetes
-  provisioner "remote-exec" {
-    script = "setup-kubernetes.sh"
-    connection {
-      type        = "ssh"
-      user        = "jace"
-      host        = self.network_interface.0.access_config.0.nat_ip
-      private_key = file("~/.ssh/google_compute_engine")
-    }
-  }
 }
