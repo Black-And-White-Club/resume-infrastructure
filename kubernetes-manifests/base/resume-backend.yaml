@@ -35,8 +35,8 @@ spec:
         - name: gcp-credentials
       containers:
         - name: resume-backend
-          # image: resume-backend:3f52a15
-          image: us-central1-docker.pkg.dev/resume-portfolio-project/portfolio-app-images-charts/resume-backend:3f52a15
+          # localimage: resume-backend:3f52a15
+          image: us-central1-docker.pkg.dev/__PROJECT_ID__/portfolio-app-images-charts/resume-backend:3f52a15
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000

@@ -7,18 +7,11 @@ spec:
   destination:
     server: https://10.128.0.16:6443
     namespace: resume-app
-  sources:
-    - repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
-      targetRevision: main
-      path: kubernetes-manifests/base
-      directory:
-        include: "resume-backend.yaml"
-    - repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
-      targetRevision: main
-      path: kubernetes-manifests/base
-      directory:
-        include: "resume-frontend.yaml"
   project: resume-portfolio
+  source:
+    repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
+    targetRevision: main
+    path: kubernetes-manifests/base
   syncPolicy:
     automated:
       prune: true
