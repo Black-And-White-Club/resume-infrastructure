@@ -11,7 +11,9 @@ spec:
   source:
     repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
     targetRevision: main
-    path: kubernetes-manifests/base
+    path: kubernetes-manifests
+    kustomize:
+      path: base
   syncPolicy:
     automated:
       prune: true
