@@ -33,7 +33,6 @@ resource "google_compute_instance" "resume-project-vm" {
 
   # Reference the subnetwork created in network.tf
   network_interface {
-    network    = google_compute_network.main.id
     subnetwork = google_compute_subnetwork.main.id
     access_config {
       nat_ip       = google_compute_address.static_ip.address
