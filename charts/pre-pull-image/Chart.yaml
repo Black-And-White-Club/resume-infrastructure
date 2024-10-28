@@ -1,9 +1,9 @@
 apiVersion: v2
-name: pull worker
+name: pre-pull-image
 description: Pre-pull My Application Images Because My Understanding Is Bad
 
 type: application
 
-version: 0.1.5
+version: 0.1.6
 
-appVersion: "1.36.1"
+appVersion: "2.7"
