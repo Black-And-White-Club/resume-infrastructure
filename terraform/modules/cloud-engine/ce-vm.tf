@@ -17,7 +17,7 @@ resource "google_compute_instance" "resume-project-vm" {
 
   can_ip_forward            = true
   deletion_protection       = false
-  enable_display            = true
+  enable_display            = false
   allow_stopping_for_update = true
 
   labels = {
@@ -35,7 +35,6 @@ resource "google_compute_instance" "resume-project-vm" {
   network_interface {
     subnetwork = google_compute_subnetwork.main.id
     access_config {
-      nat_ip       = google_compute_address.static_ip.address
       network_tier = "STANDARD"
     }
   }

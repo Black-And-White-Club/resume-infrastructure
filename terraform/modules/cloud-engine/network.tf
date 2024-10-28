@@ -86,10 +86,3 @@ resource "google_compute_firewall" "allow-argocd-prometheus-external" {
   source_ranges = var.local_ip
   target_tags   = ["argocd", "prometheus"]
 }
-
-resource "google_compute_address" "static_ip" {
-  name         = "resume-project-vm-instance"
-  region       = var.region
-  project      = var.project_id
-  network_tier = "STANDARD"
-}
