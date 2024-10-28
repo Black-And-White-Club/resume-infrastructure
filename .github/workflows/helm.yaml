@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "charts/pre-pull-image/**"
 
 jobs:
   release:
