@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  pre-pull-image:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-10-28T10:50:57.261298-05:00"
+    description: Pre-pull My Application Images Because My Understanding Is Bad
+    digest: 7ec5f23791fa8994c5aee79980e5b6ea8cb686c5fd2f1c01524a129e816653ae
+    name: pre-pull-image
+    type: application
+    urls:
+    - pre-pull-image-0.1.1.tgz
+    version: 0.1.1
+generated: "2024-10-28T10:50:57.261316-05:00"
