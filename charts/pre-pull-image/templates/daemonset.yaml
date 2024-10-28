@@ -15,7 +15,7 @@ spec:
       containers:
       - name: puller
         image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
-        command: ["/bin/sh", "-c"]
-        args: ["docker pull {{ .Values.targetImage }}"]
+        command: ["docker"]
+        args: ["pull", "{{ .Values.targetImage }}"] 
       imagePullSecrets:
         - name: {{ .Values.imagePullSecret }}
