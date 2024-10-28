@@ -15,8 +15,8 @@ spec:
       containers:
       - name: puller
         image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
-        command: ["docker"]
-        args: ["pull", "{{ .Values.targetImage }}"] 
+        command: ["/bin/sh"]  # Change command to use a shell
+        args: ["-c", "while true; do docker pull {{ .Values.targetImage }} || sleep 10; done"]  
         volumeMounts:
         - name: docker-sock
           mountPath: /var/run/docker.sock
