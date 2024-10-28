@@ -25,7 +25,7 @@ resource "google_compute_instance" "resume-project-vm" {
     goog-ops-agent-policy = "v2-x86-template-1-3-0"
   }
 
-  machine_type = "e2-medium"
+  machine_type = "t2d-standard-4"
 
   metadata = {
     enable-osconfig = "TRUE"
