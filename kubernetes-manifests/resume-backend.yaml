@@ -33,22 +33,19 @@ spec:
       labels:
         app: resume-backend
     spec:
-      serviceAccountName: resume-app-sa
-      imagePullSecrets:
-        - name: gcp-credentials
       containers:
         - name: resume-backend
           # localimage: resume-backend:3f52a15
-          image: us-central1-docker.pkg.dev/resume-portfolio-project/portfolio-app-images-charts/resume-backend:3f52a15
+          image: resume-backend:3f52a15
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
           env:
             - name: ALLOWED_ORIGINS
               value: jaromero.cloud
-            - name: GOOGLE_APPLICATION_CREDENTIALS # Add this line
-              value: /secrets/key.json # Add this line
-          volumeMounts: # Add this section
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /secrets/key.json
+          volumeMounts:
             - name: gcp-credentials-volume
               mountPath: /secrets
           livenessProbe:
@@ -63,7 +60,3 @@ spec:
               port: 8000
             initialDelaySeconds: 30
             timeoutSeconds: 1
-      volumes: # Add this section
-        - name: gcp-credentials-volume
-          secret:
-            secretName: gcp-credentials

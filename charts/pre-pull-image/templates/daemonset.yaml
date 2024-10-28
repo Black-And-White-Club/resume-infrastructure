@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ .Chart.Name }}-pre-pull
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}-pre-pull
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}-pre-pull
+    spec:
+      containers:
+      - name: puller
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        command: ["/bin/sh", "-c"]
+        args: ["docker pull {{ .Values.targetImage }}"]
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecret }}

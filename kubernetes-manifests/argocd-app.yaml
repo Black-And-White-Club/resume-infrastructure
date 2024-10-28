@@ -24,3 +24,20 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+# project: resume-portfolio
+# destination:
+#   server: https://10.128.0.16:6443
+#   namespace: argocd
+# syncPolicy:
+#   syncOptions:
+#     - CreateNamespace=true
+# sources:
+#   - repoURL: https://argoproj.github.io/argo-helm
+#     targetRevision: 7.6.12
+#     helm:
+#       valueFiles:
+#         - $values/charts/argo-cd/values.yaml
+#     chart: argo-cd
+#   - repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
+#     targetRevision: main
+#     ref: values
