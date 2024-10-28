@@ -17,11 +17,11 @@ spec:
         image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
         command: ["docker"]
         args: ["pull", "{{ .Values.targetImage }}"] 
-      imagePullSecrets:
-        - name: {{ .Values.imagePullSecret }}
-      volumeMounts:
+        volumeMounts:
         - name: docker-sock
           mountPath: /var/run/docker.sock
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecret }}
       volumes:
       - name: docker-sock
         hostPath:
