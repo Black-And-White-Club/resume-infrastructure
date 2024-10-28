@@ -46,6 +46,11 @@ spec:
           env:
             - name: ALLOWED_ORIGINS
               value: jaromero.cloud
+            - name: GOOGLE_APPLICATION_CREDENTIALS # Add this line
+              value: /secrets/key.json # Add this line
+          volumeMounts: # Add this section
+            - name: gcp-credentials-volume
+              mountPath: /secrets
           livenessProbe:
             httpGet:
               path: /healthz
@@ -58,3 +63,7 @@ spec:
               port: 8000
             initialDelaySeconds: 30
             timeoutSeconds: 1
+      volumes: # Add this section
+        - name: gcp-credentials-volume
+          secret:
+            secretName: gcp-credentials
