@@ -20,8 +20,7 @@ spec:
           - "-c"
           - |
             cp /root/.docker/config.json /root/new-config.json && \
-            export DOCKER_CONFIG=/root && \
-            cat /root/new-config.json | docker login -u _json_key --password-stdin https://us-central1-docker.pkg.dev && \
+            DOCKER_CONFIG=/root docker login -u _json_key --password-stdin https://us-central1-docker.pkg.dev < /root/new-config.json && \
             while true; do sleep 10; done
         env:
           - name: DOCKER_CONFIG_JSON
