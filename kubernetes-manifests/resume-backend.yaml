@@ -47,8 +47,6 @@ spec:
           volumeMounts:
             - name: docker-sock
               mountPath: /var/run/docker.sock
-            - name: config-volume
-              mountPath: /config
       containers:
         - name: resume-backend
           image: resume-backend:3f52a15
