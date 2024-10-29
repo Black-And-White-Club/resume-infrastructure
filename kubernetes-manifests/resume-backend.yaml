@@ -56,9 +56,6 @@ spec:
           env:
             - name: ALLOWED_ORIGINS
               value: jaromero.cloud
-          volumeMounts:
-            - name: config-volume
-              mountPath: /config
           livenessProbe:
             httpGet:
               path: /healthz
@@ -75,9 +72,6 @@ spec:
         - name: docker-sock
           hostPath:
             path: /var/run/docker.sock
-        - name: config-volume
-          configMap:
-            name: app-config
 
 ---
 apiVersion: monitoring.coreos.com/v1
