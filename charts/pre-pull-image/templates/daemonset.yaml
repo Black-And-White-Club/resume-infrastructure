@@ -19,13 +19,9 @@ spec:
         args:
           - "-c"
           - |
-            # Create a temporary directory for Docker config
-            mkdir -p /tmp/docker && \
-            echo "$DOCKER_CONFIG_JSON" > /tmp/docker/config.json && \
-            export DOCKER_CONFIG=/tmp/docker && \
-            # Extract the password from the config and use it to login
-            PASSWORD=$(jq -r '.auths["https://us-central1-docker.pkg.dev"].auth' /tmp/docker/config.json | base64 --decode | cut -d: -f2) && \
-            echo "$PASSWORD" | docker login -u _json_key --password-stdin https://us-central1-docker.pkg.dev && \
+            cp /root/.docker/config.json /root/new-config.json && \
+            export DOCKER_CONFIG=/root && \
+            cat /root/new-config.json | docker login -u _json_key --password-stdin https://us-central1-docker.pkg.dev && \
             while true; do sleep 10; done
         env:
           - name: DOCKER_CONFIG_JSON
@@ -36,9 +32,16 @@ spec:
         volumeMounts:
           - name: docker-sock
             mountPath: /var/run/docker.sock
+          - name: docker-config
+            mountPath: /root/.docker/config.json
+            subPath: .dockerconfigjson
+            readOnly: true
       imagePullSecrets:
         - name: {{ .Values.imagePullSecret }}
       volumes:
         - name: docker-sock
           hostPath:
             path: /var/run/docker.sock
+        - name: docker-config
+          secret:
+            secretName: {{ .Values.imagePullSecret }}
