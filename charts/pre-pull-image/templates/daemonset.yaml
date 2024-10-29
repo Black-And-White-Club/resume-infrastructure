@@ -16,7 +16,17 @@ spec:
       - name: puller
         image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
         command: ["/bin/sh"]
-        args: ["-c", "while true; do docker pull {{ .Values.targetImage }} || sleep 10; done"]
+        args:
+          - "-c"
+          - |
+            echo "$DOCKER_CONFIG_JSON" | docker login -u _json_key --password-stdin https://us-central1-docker.pkg.dev && \
+            while true; do sleep 10; done
+        env:
+          - name: DOCKER_CONFIG_JSON
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.imagePullSecret }} 
+                key: .dockerconfigjson  
         volumeMounts:
           - name: docker-sock
             mountPath: /var/run/docker.sock
@@ -24,9 +34,6 @@ spec:
             mountPath: /root/.docker/config.json
             subPath: .dockerconfigjson
             readOnly: true
-        env:
-          - name: GOOGLE_APPLICATION_CREDENTIALS
-            value: /root/.docker/config.json
       imagePullSecrets:
         - name: {{ .Values.imagePullSecret }}
       volumes:
