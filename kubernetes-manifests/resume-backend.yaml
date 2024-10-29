@@ -58,11 +58,6 @@ spec:
           env:
             - name: ALLOWED_ORIGINS
               value: jaromero.cloud
-            - name: IMAGE_TAG
-              valueFrom:
-                configMapKeyRef:
-                  name: app-config
-                  key: image_tag
           volumeMounts:
             - name: config-volume
               mountPath: /config
