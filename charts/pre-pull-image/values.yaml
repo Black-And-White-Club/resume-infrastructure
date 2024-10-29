@@ -1,5 +1,0 @@
-namespace: default
-image:
-  repository: docker
-  tag: cli
-targetImage: us-central1-docker.pkg.dev/resume-portfolio-project/portfolio-app-images-charts/resume-backend:3f52a15

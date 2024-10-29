@@ -1,9 +1,0 @@
-apiVersion: v2
-name: pre-pull-image
-description: Pre-pull My Application Images Because My Understanding Is Bad
-
-type: application
-
-version: 0.1.25
-
-appVersion: "2.7"
