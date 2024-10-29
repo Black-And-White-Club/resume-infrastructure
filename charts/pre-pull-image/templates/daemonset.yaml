@@ -14,12 +14,9 @@ spec:
     spec:
       containers:
       - name: puller
-        image: {{ .Values.image.repository }}:{{ .Values.image.tag }} 
+        image: google/cloud-sdk:latest 
         command: ["/bin/sleep"]
         args: ["infinity"]
-        env:
-          - name: PATH
-            value: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin 
         volumeMounts:
           - name: docker-sock
             mountPath: /var/run/docker.sock
