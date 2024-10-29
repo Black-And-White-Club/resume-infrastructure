@@ -14,9 +14,14 @@ spec:
     spec:
       containers:
       - name: puller
-        image: google/cloud-sdk:latest 
-        command: ["/bin/sleep"]
-        args: ["infinity"]
+        image: golang:latest 
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            go install github.com/GoogleCloudPlatform/docker-credential-gcr/v2@latest
+            export PATH="$PATH:$HOME/go/bin"
+            docker-credential-gcr configure-docker --registries=us-central1-docker.pkg.dev
+            sleep infinity 
         volumeMounts:
           - name: docker-sock
             mountPath: /var/run/docker.sock
