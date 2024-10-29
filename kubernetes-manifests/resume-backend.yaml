@@ -16,15 +16,6 @@ spec:
       targetPort: 8000
 
 ---
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: app-config
-  namespace: resume-app
-data:
-  image_tag: 3f52a15
-
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -52,7 +43,7 @@ spec:
               chmod +x docker-credential-gcr
               mv docker-credential-gcr /usr/bin/
               docker-credential-gcr configure-docker --registries=us-central1-docker.pkg.dev
-              docker pull us-central1-docker.pkg.dev/resume-portfolio-project/portfolio-app-images-charts/resume-backend:$(cat /config/image_tag)
+              docker pull us-central1-docker.pkg.dev/resume-portfolio-project/portfolio-app-images-charts/resume-backend:3f52a15
           volumeMounts:
             - name: docker-sock
               mountPath: /var/run/docker.sock
@@ -60,7 +51,7 @@ spec:
               mountPath: /config
       containers:
         - name: resume-backend
-          image: resume-backend:$IMAGE_TAG
+          image: resume-backend:3f52a15
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
