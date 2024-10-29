@@ -15,23 +15,24 @@ spec:
       containers:
       - name: puller
         image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
-        command: ["/bin/sh"]  # Change command to use a shell
-        args: ["-c", "while true; do docker pull {{ .Values.targetImage }} || sleep 10; done"]  
+        command: ["/bin/sh"]
+        args: ["-c", "while true; do docker pull {{ .Values.targetImage }} || sleep 10; done"]
         volumeMounts:
-        - name: docker-sock
-          mountPath: /var/run/docker.sock
-        - name: gcp-credentials
-          mountPath: /etc/gcp-credentials
-          readOnly: true
+          - name: docker-sock
+            mountPath: /var/run/docker.sock
+          - name: docker-config
+            mountPath: /root/.docker/config.json
+            subPath: .dockerconfigjson
+            readOnly: true
         env:
-        - name: GOOGLE_APPLICATION_CREDENTIALS
-          value: /etc/gcp-credentials/key.json
+          - name: GOOGLE_APPLICATION_CREDENTIALS
+            value: /root/.docker/config.json
       imagePullSecrets:
         - name: {{ .Values.imagePullSecret }}
       volumes:
-      - name: docker-sock
-        hostPath:
-          path: /var/run/docker.sock
-      - name: gcp-credentials
-        secret:
-          secretName: gcp-credentials
+        - name: docker-sock
+          hostPath:
+            path: /var/run/docker.sock
+        - name: docker-config
+          secret:
+            secretName: {{ .Values.imagePullSecret }}
