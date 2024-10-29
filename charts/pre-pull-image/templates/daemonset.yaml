@@ -17,6 +17,9 @@ spec:
         image: {{ .Values.image.repository }}:{{ .Values.image.tag }} 
         command: ["/bin/sleep"]
         args: ["infinity"]
+        env:
+          - name: PATH
+            value: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin 
         volumeMounts:
           - name: docker-sock
             mountPath: /var/run/docker.sock
