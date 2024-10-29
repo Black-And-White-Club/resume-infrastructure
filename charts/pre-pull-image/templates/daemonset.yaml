@@ -12,25 +12,15 @@ spec:
       labels:
         app: {{ .Chart.Name }}-pre-pull
     spec:
-      serviceAccountName: workload-identity-daemonset-sa
       containers:
       - name: puller
         image: {{ .Values.image.repository }}:{{ .Values.image.tag }} 
         command: ["/bin/sleep"]
         args: ["infinity"]
-        env:
-          - name: GOOGLE_APPLICATION_CREDENTIALS
-            value: /config/workload.json 
         volumeMounts:
-          - name: workload-identity-config
-            mountPath: /config
-            readOnly: true
           - name: docker-sock
             mountPath: /var/run/docker.sock
       volumes:
-        - name: workload-identity-config
-          secret:
-            secretName: workload-identity-key  
         - name: docker-sock
           hostPath:
             path: /var/run/docker.sock
