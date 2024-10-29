@@ -16,13 +16,20 @@ spec:
       targetPort: 8000
 
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: resume-app
+data:
+  image_tag: 3f52a15
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: resume-backend
   namespace: resume-app
-  annotations:
-    iam.gke.io/gcp-service-account: resume-app-sa@resume-portfolio-project.iam.gserviceaccount.com
 spec:
   replicas: 1
   selector:
@@ -33,21 +40,40 @@ spec:
       labels:
         app: resume-backend
     spec:
+      initContainers:
+        - name: install-and-pull-image
+          image: docker:cli
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              curl -fsSL "https://github.com/GoogleCloudPlatform/docker-credential-gcr/releases/download/v2.1.25/docker-credential-gcr_linux_amd64-2.1.25.tar.gz" \
+                | tar xz docker-credential-gcr
+              chmod +x docker-credential-gcr
+              mv docker-credential-gcr /usr/bin/
+              docker-credential-gcr configure-docker --registries=us-central1-docker.pkg.dev
+              docker pull us-central1-docker.pkg.dev/resume-portfolio-project/portfolio-app-images-charts/resume-backend:$(cat /config/image_tag)
+          volumeMounts:
+            - name: docker-sock
+              mountPath: /var/run/docker.sock
+            - name: config-volume
+              mountPath: /config
       containers:
         - name: resume-backend
-          # localimage: resume-backend:3f52a15
-          image: resume-backend:3f52a15
+          image: resume-backend:$IMAGE_TAG
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
           env:
             - name: ALLOWED_ORIGINS
               value: jaromero.cloud
-            - name: GOOGLE_APPLICATION_CREDENTIALS
-              value: /secrets/key.json
+            - name: IMAGE_TAG
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: image_tag
           volumeMounts:
-            - name: gcp-credentials-volume
-              mountPath: /secrets
+            - name: config-volume
+              mountPath: /config
           livenessProbe:
             httpGet:
               path: /healthz
@@ -60,3 +86,29 @@ spec:
               port: 8000
             initialDelaySeconds: 30
             timeoutSeconds: 1
+      volumes:
+        - name: docker-sock
+          hostPath:
+            path: /var/run/docker.sock
+        - name: config-volume
+          configMap:
+            name: app-config
+
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: resume-backend-monitor
+  namespace: resume-app
+  labels:
+    app: resume-backend-monitor
+    release: prometheus
+spec:
+  jobLabel: job
+  selector:
+    matchLabels:
+      app: resume-backend
+  endpoints:
+    - port: api-port
+      path: /metrics
+      interval: 30m

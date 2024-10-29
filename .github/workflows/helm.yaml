@@ -1,11 +1,7 @@
 name: Helm Chart Release
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - "charts/pre-pull-image/**"
+  pull_request:
 
 jobs:
   release:
