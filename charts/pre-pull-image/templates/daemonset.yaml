@@ -13,26 +13,29 @@ spec:
         app: {{ .Chart.Name }}-pre-pull
     spec:
       containers:
-        - name: puller
-          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
-          command: ["/bin/sh"]
-          args:
-            - "-c"
-            - |
-              mkdir -p /tmp/docker && \
-              echo "$DOCKER_CONFIG_JSON" > /tmp/docker/config.json && \
-              export DOCKER_CONFIG=/tmp/docker && \
-              docker login -u _json_key --password-stdin https://us-central1-docker.pkg.dev && \
-              while true; do sleep 10; done
-          env:
-            - name: DOCKER_CONFIG_JSON
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.imagePullSecret }} 
-                  key: .dockerconfigjson  
-          volumeMounts:
-            - name: docker-sock
-              mountPath: /var/run/docker.sock
+      - name: puller
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        command: ["/bin/sh"]
+        args:
+          - "-c"
+          - |
+            # Create a temporary directory for Docker config
+            mkdir -p /tmp/docker && \
+            echo "$DOCKER_CONFIG_JSON" > /tmp/docker/config.json && \
+            export DOCKER_CONFIG=/tmp/docker && \
+            # Extract the password from the config and use it to login
+            PASSWORD=$(jq -r '.auths["https://us-central1-docker.pkg.dev"].auth' /tmp/docker/config.json | base64 --decode | cut -d: -f2) && \
+            echo "$PASSWORD" | docker login -u _json_key --password-stdin https://us-central1-docker.pkg.dev && \
+            while true; do sleep 10; done
+        env:
+          - name: DOCKER_CONFIG_JSON
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.imagePullSecret }} 
+                key: .dockerconfigjson  
+        volumeMounts:
+          - name: docker-sock
+            mountPath: /var/run/docker.sock
       imagePullSecrets:
         - name: {{ .Values.imagePullSecret }}
       volumes:
