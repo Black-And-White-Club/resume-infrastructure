@@ -3,6 +3,16 @@ entries:
   pre-pull-image:
   - apiVersion: v2
     appVersion: "2.7"
+    created: "2024-10-29T01:59:15.153467644Z"
+    description: Pre-pull My Application Images Because My Understanding Is Bad
+    digest: ebfd07549fe10b21fd385d5a455a93c88d288fa04e5ca22474b97a8abf1613c5
+    name: pre-pull-image
+    type: application
+    urls:
+    - https://github.com/Black-And-White-Club/resume-infrastructure/releases/download/pre-pull-image-0.1.18/pre-pull-image-0.1.18.tgz
+    version: 0.1.18
+  - apiVersion: v2
+    appVersion: "2.7"
     created: "2024-10-29T01:54:06.065789105Z"
     description: Pre-pull My Application Images Because My Understanding Is Bad
     digest: 9fef9833147379958c50c38b2aeb15e29e9747e6db608ed136585f535ac48783
@@ -161,4 +171,4 @@ entries:
     urls:
     - pre-pull-image-0.1.1.tgz
     version: 0.1.1
-generated: "2024-10-29T01:54:06.06595236Z"
+generated: "2024-10-29T01:59:15.153673499Z"
