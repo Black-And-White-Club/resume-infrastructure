@@ -12,37 +12,25 @@ spec:
       labels:
         app: {{ .Chart.Name }}-pre-pull
     spec:
+      serviceAccountName: workload-identity-daemonset-sa
       containers:
       - name: puller
-        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
-        command: ["/bin/sh"]
-        args:
-          - "-c"
-          - |
-            cp /root/.docker/config.json /root/new-config.json && \
-            cat /root/new-config.json | docker login -u _json_key --password-stdin https://us-central1-docker.pkg.dev && \
-            while true; do sleep 10; done
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }} 
+        command: ["/bin/sleep"]
+        args: ["infinity"]
         env:
-          - name: DOCKER_CONFIG
-            value: /root
-          - name: DOCKER_CONFIG_JSON
-            valueFrom:
-              secretKeyRef:
-                name: {{ .Values.imagePullSecret }} 
-                key: .dockerconfigjson  
+          - name: GOOGLE_APPLICATION_CREDENTIALS
+            value: /config/workload.json 
         volumeMounts:
+          - name: workload-identity-config
+            mountPath: /config
+            readOnly: true
           - name: docker-sock
             mountPath: /var/run/docker.sock
-          - name: docker-config
-            mountPath: /root/.docker/config.json
-            subPath: .dockerconfigjson
-            readOnly: true
-      imagePullSecrets:
-        - name: {{ .Values.imagePullSecret }}
       volumes:
+        - name: workload-identity-config
+          secret:
+            secretName: workload-identity-key  
         - name: docker-sock
           hostPath:
             path: /var/run/docker.sock
-        - name: docker-config
-          secret:
-            secretName: {{ .Values.imagePullSecret }}
