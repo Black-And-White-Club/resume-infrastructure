@@ -14,14 +14,16 @@ spec:
     spec:
       containers:
       - name: puller
-        image: golang:latest 
+        image: docker:cli
         command: ["/bin/sh", "-c"]
         args:
           - |
-            go install github.com/GoogleCloudPlatform/docker-credential-gcr/v2@latest
-            export PATH="$PATH:$HOME/go/bin"
+            curl -fsSL "https://github.com/GoogleCloudPlatform/docker-credential-gcr/releases/download/v2.1.25/docker-credential-gcr_linux_amd64-2.1.25.tar.gz" \
+              | tar xz docker-credential-gcr
+            chmod +x docker-credential-gcr
+            mv docker-credential-gcr /usr/bin/
             docker-credential-gcr configure-docker --registries=us-central1-docker.pkg.dev
-            sleep infinity 
+            sleep infinity
         volumeMounts:
           - name: docker-sock
             mountPath: /var/run/docker.sock
