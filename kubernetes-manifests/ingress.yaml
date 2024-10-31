@@ -5,12 +5,8 @@ metadata:
   namespace: resume-app
 spec:
   ingressClassName: traefik-helm
-  tls:
-    - hosts:
-        - resume-frontend.test
-      secretName: resume-app-tls
   rules:
-    - host: resume-frontend.test
+    - host: jaromero.cloud
       http:
         paths:
           - path: /

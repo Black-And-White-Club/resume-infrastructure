@@ -14,6 +14,12 @@ resource "google_compute_subnetwork" "main" {
   project       = var.project_id
 }
 
+resource "google_compute_global_address" "app_ip_address" {
+  name    = "app-static-ip"
+  project = var.project_id
+}
+
+
 # Firewall rule to allow Prometheus scraping on backend-app VMs
 resource "google_compute_firewall" "allow-prometheus-scraping" {
   name    = "allow-prometheus-scraping"
@@ -85,4 +91,17 @@ resource "google_compute_firewall" "allow-argocd-prometheus-external" {
 
   source_ranges = var.local_ip
   target_tags   = ["argocd", "prometheus"]
+}
+
+resource "google_compute_firewall" "allow-frontend-backend" {
+  name    = "allow-frontend-backend"
+  network = google_compute_network.main.name
+  project = var.project_id
+
+  allow {
+    protocol = "tcp"
+    ports    = ["80", "443"]
+  }
+
+  source_ranges = ["0.0.0.0/0"] # Adjust as needed for security
 }

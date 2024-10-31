@@ -1,12 +1,65 @@
-ingressRoute:
-  dashboard:
+# https://github.com/traefik/traefik-helm-chart/blob/master/traefik/values.yaml
+# Enable Traefik to use Let's Encrypt
+# certificatesResolvers:
+#   letsEncrypt:
+#     acme:
+#       email: romero.jace@gmail.com
+#       storage: /data/acme.json
+#       tlsChallenge: {} # Use TLS challenge
+
+service:
+  spec:
+    externalTrafficPolicy: Cluster
+    loadBalancerIP: "34.49.45.74" # Uncommented to assign the static IP
+
+# Set entry points
+entryPoints:
+  web:
+    address: ":80"
+  websecure:
+    address: ":443"
+
+# Service configurations
+providers:
+  kubernetesIngress:
+    enabled: true
+  kubernetesCRD:
     enabled: true
 
-ingressClass:
+# Persistence for certificates
+persistence:
   enabled: true
-  isDefaultClass: true
-  name: traefik-helm
+  accessMode: ReadWriteOnce
+  size: 128Mi
+  storageClass: "standard"
+  path: /data
 
-logs:
-  access:
-    enabled: true
+# Middleware for redirecting HTTP to HTTPS
+http:
+  middlewares:
+    redirect-to-https:
+      redirectScheme:
+        scheme: https
+        permanent: true
+
+ingressRoute:
+  resumeAppIngress:
+    metadata:
+      name: resume-app-ingress
+      namespace: resume-app
+    spec:
+      entryPoints:
+        - websecure
+      routes:
+        - match: Host(`jaromero.cloud`)
+          kind: Rule
+          services:
+            - name: resume-frontend-svc
+              port: 80
+        - match: Host(`jaromero.cloud`) && PathPrefix(`/api/count`)
+          kind: Rule
+          services:
+            - name: resume-backend-svc
+              port: 8000
+      # tls:
+      #   certResolver: letsEncrypt

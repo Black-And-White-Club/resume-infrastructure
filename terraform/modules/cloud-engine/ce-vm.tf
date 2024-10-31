@@ -1,7 +1,8 @@
+// https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_instance
 resource "google_compute_instance" "resume-project-vm" {
   project = var.project_id
   name    = "resume-project-vm"
-  zone    = "us-central1-a"
+  zone    = var.zone
 
   boot_disk {
     auto_delete = true
@@ -75,6 +76,25 @@ resource "google_compute_instance" "resume-project-vm" {
     "kubernetes-node",
     "lb-health-check",
     "prometheus",
-    "web-app"
+    "web-app",
+    "postgres"
   ]
+}
+
+// PVC for PostgresSQL
+// https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_disk
+resource "google_compute_disk" "db_storage" {
+  name    = "db-storage"
+  project = var.project_id
+  zone    = var.zone
+  type    = "pd-standard"
+  size    = 10
+}
+
+resource "google_compute_attached_disk" "db_storage_attach" {
+  instance = google_compute_instance.resume-project-vm.name
+  project  = var.project_id
+  zone     = var.zone
+  disk     = google_compute_disk.db_storage.name
+  mode     = "READ_WRITE"
 }

@@ -1,6 +1,7 @@
 variable "project_id" {
   description = "The ID of the Google Cloud project"
   type        = string
+  sensitive   = true
 }
 
 variable "region" {
@@ -12,6 +13,7 @@ variable "region" {
 variable "service_account_id" {
   description = "The account ID for the service account"
   type        = string
+  sensitive   = true
 }
 
 variable "service_account_display_name" {
@@ -22,4 +24,10 @@ variable "service_account_display_name" {
 variable "service_account_email" {
   description = "Service account email"
   type        = string
+  sensitive   = true
 }
+variable "zone" {
+  type        = string
+  description = "The Zone to deploy GCP Resources"
+}
+

@@ -1,3 +1,4 @@
+# https://github.com/argoproj/argo-helm/blob/main/charts/argo-cd/values.yaml
 metricsConfig: &metricsConfig
   enabled: true
   path: /metrics
