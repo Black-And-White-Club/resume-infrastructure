@@ -1,5 +1,8 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
+metadata:
+  name: postgres
+  namespace: argocd
 spec:
   project: resume-portfolio
   sources:
@@ -12,8 +15,6 @@ spec:
     - repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
       targetRevision: main
       ref: values
-  metadata:
-    name: postgres
   destination:
     server: https://kubernetes.default.svc
 # apiVersion: argoproj.io/v1alpha1
