@@ -4,6 +4,7 @@ metadata:
   name: postgres-app
   namespace: postgres
 spec:
+  project: resume-portfolio
   sources:
     - repoURL: "oci://registry-1.docker.io/bitnamicharts"
       chart: postgresql
