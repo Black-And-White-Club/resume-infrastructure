@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 spec:
   sources:
-    - repoURL: oci://registry-1.docker.io/bitnamicharts/postgresql
+    - repoURL: oci://registry-1.docker.io/bitnamicharts
       chart: postgresql
       targetRevision: 16.1.0
       helm:
