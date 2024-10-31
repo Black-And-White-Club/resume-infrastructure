@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  namespace: argocd
+  name: postgres
 spec:
   project: resume-portfolio
   sources:
