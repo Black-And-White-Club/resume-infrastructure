@@ -1,33 +1,44 @@
 # https://github.com/bitnami/charts/blob/main/bitnami/postgresql/values.yaml
-
 global:
-  postgresql:
-    postgresqlDatabase: "resume"
+  architecture: standalone
+  auth:
+    database: resume_app
+    username: backend_api
+    existingSecret: postgresql-secret
+    secretKeys:
+      userPasswordKey: postgresql-password
 
-postgresql:
-  image:
-    tag: "15.3.0-debian-11-r15"
-
-  replication:
-    enabled: false
-  backup:
-    enabled: false
-
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+    interval: 10m
+    labels: { Prometheus }
+    scrapeTimeout: 10s
+    selector: { pgsql }
   resources:
     requests:
       cpu: 10m
       memory: 64Mi
     limits:
       cpu: 50m
-      memory: 128Mi
+      memory: 100Mi
 
+# Initialize the database with SQL scripts from a secret
+primary:
   persistence:
     enabled: true
-    existingClaim: "db-storage"
-
-  service:
-    type: ClusterIP
-
+    volumeName: db_storage
+    storageClass: standard
+    accessModes: ReadWriteOnce
+    size: 8Gi
+  resources:
+    requests:
+      cpu: 50m
+      memory: 256Mi
+    limits:
+      cpu: 250m
+      memory: 512Mi
   livenessProbe:
     initialDelaySeconds: 30
     periodSeconds: 10
@@ -38,25 +49,3 @@ postgresql:
     periodSeconds: 5
     timeoutSeconds: 3
     failureThreshold: 3
-
-metrics:
-  enabled: true
-  serviceMonitor:
-    enabled: true
-    interval: 10m
-    labels: { Prometheus }
-    scrapeTimeout: 10s
-    selector: { pgsql }
-
-networkPolicy:
-  enabled: true
-
-# Initialize the database with SQL scripts from a secret
-primary:
-  initdb:
-    scriptsSecret: postgresql-init-secret
-
-# Set the POSTGRESQL_PASSWORD environment variable
-extraEnvVarsSecret:
-  name: postgresql-secret
-  key: postgresql-password
