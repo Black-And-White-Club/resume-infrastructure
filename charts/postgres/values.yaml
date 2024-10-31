@@ -30,7 +30,7 @@ metrics:
 primary:
   persistence:
     enabled: true
-    volumeName: db_storage
+    volumeName: db-storage
     storageClass: standard
     accessModes:
       - ReadWriteOnce
