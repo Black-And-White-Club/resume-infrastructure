@@ -32,7 +32,8 @@ primary:
     enabled: true
     volumeName: db_storage
     storageClass: standard
-    accessModes: ReadWriteOnce
+    accessModes:
+      - ReadWriteOnce
     size: 8Gi
   resources:
     requests:
