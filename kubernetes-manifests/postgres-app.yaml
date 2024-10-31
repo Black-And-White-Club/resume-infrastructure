@@ -6,12 +6,13 @@ metadata:
 spec:
   project: resume-portfolio
   sources:
-    - repoURL: "registry-1.docker.io/bitnamicharts/postgresql"
+    - repoURL: oci://registry-1.docker.io
+      chart: bitnamicharts/postgresql
       targetRevision: 16.1.0
       helm:
         valueFiles:
           - $values/charts/postgres/values.yaml
-    - repoURL: "https://github.com/Black-And-White-Club/resume-infrastructure.git"
+    - repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
       targetRevision: main
       ref: values
   destination:
