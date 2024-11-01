@@ -54,6 +54,9 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
+          envFrom:
+            - secretRef:
+                name: backend-db-credentials
           env:
             - name: ALLOWED_ORIGINS
               value: jaromero.cloud
