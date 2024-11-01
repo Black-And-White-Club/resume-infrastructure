@@ -9,17 +9,7 @@
 
 service:
   spec:
-    externalTrafficPolicy: Cluster
-
-gatewayClass:
-  enabled: false
-# Set entry points
-entryPoints:
-  web:
-    address: ":80"
-  websecure:
-    address: ":443"
-
+    - externalTrafficPolicy: Cluster
 # Service configurations
 providers:
   kubernetesIngress:

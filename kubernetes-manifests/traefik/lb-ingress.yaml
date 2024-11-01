@@ -1,0 +1,115 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: traefik
+  namespace: traefik
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: traefik
+  template:
+    metadata:
+      labels:
+        app: traefik
+    spec:
+      containers:
+        - name: traefik
+          image: traefik:v3.2.0
+          args:
+            - --providers.kubernetesCRD
+            - --entrypoints.web.address=:80
+            - --entrypoints.websecure.address=:443
+            # Let's Encrypt configuration commented out for now
+            # - --certificatesresolvers.letsencrypt.acme.email=romero.jace@gmail.com
+            # - --certificatesresolvers.letsencrypt.acme.storage=/acme.json
+            # - --certificatesresolvers.letsencrypt.acme.tlschallenge
+            - --providers.kubernetesIngress
+            - --ping
+            - --metrics.prometheus=true # Enable Prometheus metrics
+            - --metrics.prometheus.entryPoint=traefik # Entry point for metrics
+          ports:
+            - name: web
+              containerPort: 80
+            - name: websecure
+              containerPort: 443
+            - name: metrics # Add a port for metrics
+              containerPort: 8082 # Default metrics port
+          volumeMounts:
+            - name: acme-json
+              mountPath: /acme.json
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+      volumes:
+        - name: acme-json
+          hostPath:
+            path: /var/lib/traefik/acme.json
+            type: FileOrCreate
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefik
+  namespace: traefik
+spec:
+  selector:
+    app: traefik
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: web
+    - protocol: TCP
+      port: 443
+      targetPort: websecure
+  type: LoadBalancer
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: resume-app-ingress
+  namespace: resume-app
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.tls: "true"
+spec:
+  rules:
+    - host: jaromero.cloud
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: resume-frontend-svc
+                port:
+                  number: 80
+          - path: /api/count
+            pathType: Prefix
+            backend:
+              service:
+                name: resume-backend-svc
+                port:
+                  number: 8000
+  tls:
+    - hosts:
+        - jaromero.cloud
+      secretName: letsencrypt-prod-tls
