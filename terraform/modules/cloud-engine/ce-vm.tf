@@ -91,10 +91,10 @@ resource "google_compute_disk" "db_storage" {
   size    = 10
 }
 
-resource "google_compute_attached_disk" "db_storage_attach" {
-  instance = google_compute_instance.resume-project-vm.name
-  project  = var.project_id
-  zone     = var.zone
-  disk     = google_compute_disk.db_storage.name
-  mode     = "READ_WRITE"
-}
+# resource "google_compute_attached_disk" "db_storage_attach" {
+#   instance = google_compute_instance.resume-project-vm.name
+#   project  = var.project_id
+#   zone     = var.zone
+#   disk     = google_compute_disk.db_storage.name
+#   mode     = "READ_WRITE"
+# }

@@ -36,6 +36,8 @@ primary:
     accessModes:
       - ReadWriteOnce
     size: 8Gi
+  persistentVolumeClaimRetentionPolicy:
+    enabled: true
   resources:
     requests:
       cpu: 50m
