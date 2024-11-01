@@ -29,7 +29,10 @@ primary:
   persistence:
     volumeName: "db-storage"
     existingClaim: "db-storage"
-    storageClass: "standard"
+    storageClass: "-"
+    accessModes:
+      - ReadWriteOnce
+    size: 8Gi
   persistentVolumeClaimRetentionPolicy:
     enabled: true
   resources:
