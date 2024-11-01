@@ -32,9 +32,6 @@ primary:
     existingClaim: db-storage
   persistentVolumeClaimRetentionPolicy:
     enabled: true
-  selector:
-    matchLabels:
-      app: my-app
   resources:
     requests:
       cpu: 50m
