@@ -27,9 +27,9 @@ metrics:
 # Initialize the database with SQL scripts from a secret
 primary:
   persistence:
-    volumeName: db-storage
-    storageClass: standard
-    existingClaim: "postgres/db-storage"
+    volumeName: "db-storage"
+    existingClaim: "db-storage"
+    storageClass: "standard"
   persistentVolumeClaimRetentionPolicy:
     enabled: true
   resources:
