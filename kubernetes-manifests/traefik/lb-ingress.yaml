@@ -67,19 +67,37 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: traefik
+  name: traefik-external
   namespace: traefik
 spec:
   selector:
     app: traefik
   ports:
     - protocol: TCP
+      name: web
       port: 80
       targetPort: web
     - protocol: TCP
+      name: websecure
       port: 443
       targetPort: websecure
   type: LoadBalancer
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefik-metrics
+  namespace: traefik
+spec:
+  selector:
+    app: traefik
+  ports:
+    - protocol: TCP
+      name: metrics
+      port: 8082
+      targetPort: metrics
+  type: ClusterIP
 
 ---
 apiVersion: networking.k8s.io/v1
