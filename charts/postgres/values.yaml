@@ -29,7 +29,7 @@ primary:
   persistence:
     volumeName: db-storage
     storageClass: standard
-    existingClaim: db-storage
+    existingClaim: postgres/db-storage
   persistentVolumeClaimRetentionPolicy:
     enabled: true
   resources:
