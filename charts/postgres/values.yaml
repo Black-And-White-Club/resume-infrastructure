@@ -15,9 +15,7 @@ metrics:
   serviceMonitor:
     enabled: true
     interval: 10m
-    labels: { Prometheus }
     scrapeTimeout: 10s
-    selector: { pgsql }
   resources:
     requests:
       cpu: 10m
@@ -29,15 +27,14 @@ metrics:
 # Initialize the database with SQL scripts from a secret
 primary:
   persistence:
-    enabled: true
     volumeName: db-storage
     storageClass: standard
     existingClaim: db-storage
-    accessModes:
-      - ReadWriteOnce
-    size: 8Gi
   persistentVolumeClaimRetentionPolicy:
     enabled: true
+  selector:
+    matchLabels:
+      app: my-app
   resources:
     requests:
       cpu: 50m
