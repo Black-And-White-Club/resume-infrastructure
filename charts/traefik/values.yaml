@@ -11,6 +11,8 @@ service:
   spec:
     externalTrafficPolicy: Cluster
 
+gatewayClass:
+  enabled: false
 # Set entry points
 entryPoints:
   web:
