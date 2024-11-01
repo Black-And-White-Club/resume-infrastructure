@@ -6,8 +6,8 @@ metadata:
 spec:
   project: resume-portfolio
   sources:
-    - repoURL: https://traefik.github.io/charts
-      chart: traefik
+    - repoURL: ghcr.io
+      chart: traefik/helm/traefik
       targetRevision: 33.0.0
       helm:
         valueFiles:
