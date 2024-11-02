@@ -76,38 +76,26 @@ spec:
   type: ClusterIP
 
 ---
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
 metadata:
-  name: resume-app-ingress
+  name: frontend-path
   namespace: resume-app
-  annotations:
-    kubernetes.io/ingress.class: traefik
-    traefik.ingress.kubernetes.io/router.tls: "true"
 spec:
-  rules:
-    - host: jaromero.cloud
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: resume-frontend-svc
-                port:
-                  number: 80
-          - path: /api/count
-            pathType: Prefix
-            backend:
-              service:
-                name: resume-backend-svc
-                port:
-                  number: 8000
-  tls:
-    - hosts:
-        - jaromero.cloud
-      secretName: letsencrypt-prod-tls
+  stripPrefix:
+    prefixes:
+      - /
 
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: backend-path
+  namespace: resume-app
+spec:
+  stripPrefix:
+    prefixes:
+      - /api/count
 ---
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
@@ -118,10 +106,22 @@ spec:
   entryPoints:
     - web
   routes:
-    - match: Host(`jaromero.cloud`)
+    - match: Host(`jaromero.cloud`) && PathPrefix(`/`)
       kind: Rule
+      middlewares:
+        - name: frontend-path
       services:
         - name: resume-frontend-svc
           port: 80
+          annotations:
+            traefik.io/service.serverstransport.address: 35.208.254.34:80
+
+    - match: Host(`jaromero.cloud`) && PathPrefix(`/api/count`)
+      kind: Rule
+      middlewares:
+        - name: backend-path
+      services:
+        - name: resume-backend-svc
+          port: 8000
           annotations:
             traefik.io/service.serverstransport.address: 35.208.254.34:80
