@@ -13,7 +13,7 @@ service:
 
 # Persistence for certificates
 persistence:
-  enabled: true
+  enabled: false
   accessMode: ReadWriteOnce
   size: 128Mi
   storageClass: ""
