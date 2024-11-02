@@ -23,6 +23,7 @@ persistence:
   hostPath:
     path: /var/lib/traefik/acme.json
     type: FileOrCreate
+hostNetwork: true
 
 ingressRoute:
   resumeAppIngress:

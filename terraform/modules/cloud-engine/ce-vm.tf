@@ -77,7 +77,8 @@ resource "google_compute_instance" "resume-project-vm" {
     "lb-health-check",
     "prometheus",
     "web-app",
-    "postgres"
+    "postgres",
+    "traefik",
   ]
 }
 

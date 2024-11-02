@@ -102,6 +102,21 @@ resource "google_compute_firewall" "allow-frontend-backend" {
     protocol = "tcp"
     ports    = ["80", "443"]
   }
+  target_tags = ["traefik"]
 
   source_ranges = ["0.0.0.0/0"] # Adjust as needed for security
+}
+
+resource "google_compute_firewall" "allow-health-checks" {
+  name    = "allow-health-checks"
+  network = google_compute_network.main.name
+  project = var.project_id
+
+  allow {
+    protocol = "tcp"
+    ports    = ["80", "443"] # Adjust if Traefik uses different ports
+  }
+
+  source_ranges = ["130.211.0.0/22", "35.191.0.0/16"] # Google health check IP ranges
+  target_tags   = ["traefik"]
 }
