@@ -117,8 +117,6 @@ spec:
       services:
         - name: resume-frontend-svc
           port: 80
-          annotations:
-            traefik.io/service.serverstransport.address: 35.208.254.34:80
 
     - match: Host(`jaromero.cloud`) && PathPrefix(`/api/count`)
       kind: Rule
@@ -127,5 +125,3 @@ spec:
       services:
         - name: resume-backend-svc
           port: 8000
-          annotations:
-            traefik.io/service.serverstransport.address: 35.208.254.34:80
