@@ -31,16 +31,18 @@ spec:
               containerPort: 443
             - name: metrics
               containerPort: 8082
+            - name: ping
+              containerPort: 8080
           volumeMounts:
             - name: acme-json
               mountPath: /acme.json
           resources:
             requests:
-              memory: "64Mi"
-              cpu: "250m"
-            limits:
-              memory: "256Mi"
+              memory: "128Mi"
               cpu: "500m"
+            limits:
+              memory: "512Mi"
+              cpu: "1"
           livenessProbe:
             httpGet:
               path: /ping
