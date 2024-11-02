@@ -16,8 +16,12 @@ persistence:
   enabled: true
   accessMode: ReadWriteOnce
   size: 128Mi
-  storageClass: "standard"
+  storageClass: ""
+  volumeName: traefik-data
   path: /data
+  hostPath:
+    path: /var/lib/traefik/acme.json
+    type: FileOrCreate
 
 ingressRoute:
   resumeAppIngress:
