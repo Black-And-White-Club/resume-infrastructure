@@ -81,6 +81,8 @@ kind: Middleware
 metadata:
   name: frontend-path
   namespace: resume-app
+  annotations:
+    traefik.io/service.serverstransport.address: 35.208.254.34:80
 spec:
   stripPrefix:
     prefixes:
@@ -92,6 +94,8 @@ kind: Middleware
 metadata:
   name: backend-path
   namespace: resume-app
+  annotations:
+    traefik.io/service.serverstransport.address: 35.208.254.34:80
 spec:
   stripPrefix:
     prefixes:
