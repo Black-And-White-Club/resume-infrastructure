@@ -16,7 +16,7 @@ persistence:
   enabled: true
   accessMode: ReadWriteOnce
   size: 128Mi
-  storageClass: ""
+  storageClass: "-"
   volumeName: traefik-data
   path: /data
   hostPath:

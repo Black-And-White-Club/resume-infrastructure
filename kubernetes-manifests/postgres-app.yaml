@@ -17,23 +17,3 @@ spec:
       ref: values
   destination:
     server: https://kubernetes.default.svc
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: postgres
-#   namespace: postgres
-# spec:
-#   destination:
-#     server: https://kubernetes.default.svc
-#     namespace: postgres
-#   project: resume-portfolio
-#   sources:
-#     - repoURL: "oci://registry-1.docker.io/bitnamicharts"
-#       chart: postgresql
-#       targetRevision: 16.1.0
-#       helm:
-#         valueFiles:
-#           - $values/charts/postgres/values.yaml
-#     - repoURL: "https://github.com/Black-And-White-Club/resume-infrastructure.git"
-#       targetRevision: main
-#       ref: values
