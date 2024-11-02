@@ -10,7 +10,7 @@
 service:
   spec:
     externalTrafficPolicy: Cluster
-    loadbalancerIP: "34.49.45.74"
+    loadBalancerIP: "34.49.45.74"
 
 # Persistence for certificates
 persistence:
