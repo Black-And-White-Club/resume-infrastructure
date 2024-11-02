@@ -20,21 +20,17 @@ spec:
             - --providers.kubernetesCRD
             - --entrypoints.web.address=:80
             - --entrypoints.websecure.address=:443
-            # Let's Encrypt configuration commented out for now
-            # - --certificatesresolvers.letsencrypt.acme.email=romero.jace@gmail.com
-            # - --certificatesresolvers.letsencrypt.acme.storage=/acme.json
-            # - --certificatesresolvers.letsencrypt.acme.tlschallenge
             - --providers.kubernetesIngress
             - --ping
-            - --metrics.prometheus=true # Enable Prometheus metrics
-            - --metrics.prometheus.entryPoint=traefik # Entry point for metrics
+            - --metrics.prometheus=true
+            - --metrics.prometheus.entryPoint=traefik
           ports:
             - name: web
               containerPort: 80
             - name: websecure
               containerPort: 443
-            - name: metrics # Add a port for metrics
-              containerPort: 8082 # Default metrics port
+            - name: metrics
+              containerPort: 8082
           volumeMounts:
             - name: acme-json
               mountPath: /acme.json
@@ -62,26 +58,6 @@ spec:
           hostPath:
             path: /var/lib/traefik/acme.json
             type: FileOrCreate
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: traefik-external
-  namespace: traefik
-spec:
-  selector:
-    app: traefik
-  ports:
-    - protocol: TCP
-      name: web
-      port: 80
-      targetPort: web
-    - protocol: TCP
-      name: websecure
-      port: 443
-      targetPort: websecure
-  type: LoadBalancer
 
 ---
 apiVersion: v1
@@ -131,3 +107,21 @@ spec:
     - hosts:
         - jaromero.cloud
       secretName: letsencrypt-prod-tls
+
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: resume-app-route
+  namespace: resume-app
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`jaromero.cloud`)
+      kind: Rule
+      services:
+        - name: resume-frontend-svc
+          port: 80
+          annotations:
+            traefik.io/service.serverstransport.address: 35.208.254.34:80
