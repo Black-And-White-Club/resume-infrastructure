@@ -5,7 +5,7 @@ metadata:
   namespace: resume-app
 spec:
   rules:
-    - host: 35.208.254.184
+    - host: jaromero.cloud
       http:
         paths:
           - path: /
