@@ -16,6 +16,12 @@ resource "google_compute_instance" "resume-project-vm" {
     mode = "READ_WRITE"
   }
 
+  attached_disk {
+    source      = google_compute_disk.db_storage.self_link
+    mode        = "READ_WRITE"
+    device_name = "db-storage"
+  }
+
   can_ip_forward            = true
   deletion_protection       = false
   enable_display            = false
@@ -92,10 +98,10 @@ resource "google_compute_disk" "db_storage" {
   size    = 10
 }
 
-resource "google_compute_attached_disk" "db_storage_attach" {
-  instance = google_compute_instance.resume-project-vm.name
-  project  = var.project_id
-  zone     = var.zone
-  disk     = google_compute_disk.db_storage.name
-  mode     = "READ_WRITE"
-}
+# resource "google_compute_attached_disk" "db_storage_attach" {
+#   instance = google_compute_instance.resume-project-vm.name
+#   project  = var.project_id
+#   zone     = var.zone
+#   disk     = google_compute_disk.db_storage.name
+#   mode     = "READ_WRITE"
+# }

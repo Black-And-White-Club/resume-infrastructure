@@ -107,20 +107,6 @@ resource "google_compute_firewall" "allow-frontend-backend" {
   source_ranges = ["0.0.0.0/0"] # Adjust as needed for security
 }
 
-resource "google_compute_firewall" "allow-health-checks" {
-  name    = "allow-health-checks"
-  network = google_compute_network.main.name
-  project = var.project_id
-
-  allow {
-    protocol = "tcp"
-    ports    = ["80", "443"] # Adjust if Traefik uses different ports
-  }
-
-  source_ranges = ["130.211.0.0/22", "35.191.0.0/16"] # Google health check IP ranges
-  target_tags   = ["traefik"]
-}
-
 resource "google_compute_firewall" "allow-lb-to-ingress" {
   name    = "allow-lb-to-ingress"
   network = google_compute_network.main.name
@@ -128,9 +114,23 @@ resource "google_compute_firewall" "allow-lb-to-ingress" {
 
   allow {
     protocol = "tcp"
-    ports    = ["80", "443"]
+    ports    = ["80", "443", "30645", "32226"]
   }
 
-  source_ranges = ["35.208.254.184"]
+  source_ranges = ["35.208.254.34"]
   target_tags   = ["nginx-ingress"]
+}
+
+resource "google_compute_firewall" "allow-health-checks" {
+  name    = "allow-health-checks"
+  network = google_compute_network.main.name
+  project = var.project_id
+
+  allow {
+    protocol = "tcp"
+    ports    = ["30645"] 
+  }
+
+  source_ranges = ["130.211.0.0/22", "35.191.0.0/16"]
+  target_tags   = ["kubernetes-node"]
 }
