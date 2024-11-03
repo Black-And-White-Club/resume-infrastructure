@@ -3,11 +3,9 @@ kind: Ingress
 metadata:
   name: resume-app-route
   namespace: resume-app
-  annotations:
-    kubernetes.io/ingress.class: "gce"
 spec:
   rules:
-    - host: jaromero.cloud
+    - host: 35.208.254.184
       http:
         paths:
           - path: /
