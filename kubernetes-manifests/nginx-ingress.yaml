@@ -2,7 +2,9 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: resume-app-route
-  namespace: resume-app # Replace with your application's namespace
+  namespace: resume-app
+  annotations:
+    kubernetes.io/ingress.class: "gce"
 spec:
   rules:
     - host: jaromero.cloud
