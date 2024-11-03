@@ -96,4 +96,4 @@ spec:
   endpoints:
     - port: api-port
       path: /metrics
-      interval: 30m
+      interval: 3m

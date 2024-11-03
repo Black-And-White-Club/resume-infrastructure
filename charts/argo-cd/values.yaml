@@ -5,7 +5,7 @@ metricsConfig: &metricsConfig
   serviceMonitor: &serviceMonitorConfig
     enabled: true
     autodetect: false
-    interval: 30m
+    interval: 10m
     annotations: {}
     additionalLabels: {}
     namespace: argocd

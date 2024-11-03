@@ -13,7 +13,7 @@ metrics:
   enabled: true
   serviceMonitor:
     enabled: true
-    interval: 10m
+    interval: 3m
     scrapeTimeout: 10s
   resources:
     requests:

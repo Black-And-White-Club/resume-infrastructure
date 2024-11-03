@@ -15,4 +15,3 @@ prometheus:
       matchExpressions: []
     serviceMonitorSelector: {}
     serviceMonitorSelectorNilUsesHelmValues: false
-    scrapeInterval: "30m"
