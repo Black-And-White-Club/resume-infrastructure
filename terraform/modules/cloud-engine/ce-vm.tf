@@ -78,7 +78,7 @@ resource "google_compute_instance" "resume-project-vm" {
     "prometheus",
     "web-app",
     "postgres",
-    "traefik",
+    "nginx-ingress",
   ]
 }
 

@@ -120,3 +120,17 @@ resource "google_compute_firewall" "allow-health-checks" {
   source_ranges = ["130.211.0.0/22", "35.191.0.0/16"] # Google health check IP ranges
   target_tags   = ["traefik"]
 }
+
+resource "google_compute_firewall" "allow-lb-to-ingress" {
+  name    = "allow-lb-to-ingress"
+  network = google_compute_network.main.name
+  project = var.project_id
+
+  allow {
+    protocol = "tcp"
+    ports    = ["80", "443"]
+  }
+
+  source_ranges = ["35.208.254.184"]
+  target_tags   = ["nginx-ingress"]
+}
