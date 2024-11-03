@@ -22,3 +22,10 @@ spec:
                 name: resume-backend-svc
                 port:
                   number: 8000
+          - path: /healthz
+            pathType: Exact
+            backend:
+              service:
+                name: resume-backend-svc
+                port:
+                  number: 8000
