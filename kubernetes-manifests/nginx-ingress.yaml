@@ -31,8 +31,8 @@ spec:
                 name: resume-backend-svc
                 port:
                   number: 8000
-          - path: /d/ee2ukgqn00zk0b/resume-app-dashboard?orgId=1&refresh=5m&kiosk"
-            pathType: Prefix
+          - path: /d/ee2ukgqn00zk0b/resume-app-dashboard?orgId=1&refresh=5m&kiosk
+            pathType: Exact
             backend:
               service:
                 name: prometheus-grafana
