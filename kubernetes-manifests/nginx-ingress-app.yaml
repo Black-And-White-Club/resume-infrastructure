@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: ingress
+  name: nginx-controller
   namespace: argocd
 spec:
   project: resume-portfolio
@@ -15,8 +15,5 @@ spec:
     - repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
       targetRevision: main
       ref: values
-    - repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
-      targetRevision: main
-      path: kubernetes-manifests/ingress
   destination:
     server: https://kubernetes.default.svc
