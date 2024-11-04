@@ -21,6 +21,8 @@ grafana:
       enabled: true
       device_limit: 10
       org_role: Viewer
+    server:
+      root_url: http://jaromero.cloud/grafana
   ingress:
     enabled: true
     ingressClassName: "nginx"
