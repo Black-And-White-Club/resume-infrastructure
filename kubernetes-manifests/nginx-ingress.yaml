@@ -3,9 +3,8 @@ kind: Ingress
 metadata:
   name: resume-app-route
   namespace: resume-app
-  annotations:
-    ingressClassName: nginx
 spec:
+  ingressClassName: nginx
   rules:
     - host: jaromero.cloud
       http:
