@@ -21,10 +21,10 @@ grafana:
       enabled: true
       device_limit: 10
       org_role: Viewer
+    security:
+      cookie_secure: false
     server:
-      domain: jaromero.cloud
-      protocol: http
-      root_url: "%(protocol)s://%(domain)s:%(http_port)s/"
+      root_url: http://jaromero.cloud/grafana
       serve_from_sub_path: true
   ingress:
     enabled: true
