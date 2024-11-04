@@ -50,8 +50,8 @@ spec:
               mountPath: /var/run/docker.sock
       containers:
         - name: resume-frontend
-          # localimage: resume-frontend:5990975
-          image: us-central1-docker.pkg.dev/resume-portfolio-project/portfolio-app-images-charts/resume-frontend:5990975
+          # localimage: resume-frontend:bf9ced3
+          image: us-central1-docker.pkg.dev/resume-portfolio-project/portfolio-app-images-charts/resume-frontend:bf9ced3
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000
