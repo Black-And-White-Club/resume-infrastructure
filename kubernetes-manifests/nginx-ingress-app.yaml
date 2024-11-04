@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ingress
+  namespace: argocd
+spec:
+  project: resume-portfolio
+  sources:
+    - repoURL: https://kubernetes.github.io/
+      chart: ingress-nginx
+      targetRevision: 4.12.0-beta.0
+      helm:
+        valueFiles:
+          - $values/charts/nginx-ingress-controller/values.yaml
+    - repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
+      targetRevision: main
+      ref: values
+    - repoUrl: https://github.com/Black-And-White-Club/resume-infrastructure.git
+      targetRevision: main
+      path: kubernetes-manifests
+      directory:
+        inclue: nginx-ingress.yaml
+  destination:
+    server: https://kubernetes.default.svc

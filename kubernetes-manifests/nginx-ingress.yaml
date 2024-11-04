@@ -4,7 +4,7 @@ metadata:
   name: resume-app-route
   namespace: resume-app
   annotations:
-    kubernetes.io/ingress.class: "nginx"
+    ingressClassName: nginx
 spec:
   rules:
     - host: jaromero.cloud
