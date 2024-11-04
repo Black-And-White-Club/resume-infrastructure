@@ -17,8 +17,6 @@ spec:
       ref: values
     - repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
       targetRevision: main
-      path: kubernetes-manifests
-      directory:
-        inclue: nginx-ingress.yaml
+      path: kubernetes-manifests/ingress
   destination:
     server: https://kubernetes.default.svc
