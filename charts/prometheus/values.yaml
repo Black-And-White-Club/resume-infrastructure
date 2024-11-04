@@ -17,7 +17,9 @@ prometheus:
     serviceMonitorSelectorNilUsesHelmValues: false
 grafana:
   grafana.ini:
-    auth.anonymous.enabled: true
-    auth.anonymous.org_role: Viewer
-    auth.anonymous.org_name: Black And White Club
-    security.allow_embedding: true
+    auth.anonymous:
+      enabled: true
+      device_limit: 10
+      org_role: Viewer
+    security:
+      allow_embedding: true
