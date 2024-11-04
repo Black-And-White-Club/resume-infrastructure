@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager
+spec:
+  project: resume-portfolio
+  sources:
+    - repoURL: https://charts.jetstack.io
+      chart: cert-manager
+      targetRevision: 1.16.1
+      helm:
+        valueFiles:
+          - $values/charts/cert-manager/values.yaml
+    - repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
+      targetRevision: main
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
