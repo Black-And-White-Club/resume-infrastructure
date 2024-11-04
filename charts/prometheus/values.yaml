@@ -23,6 +23,7 @@ grafana:
       org_role: Viewer
     security:
       cookie_secure: false
+      allow_embedding: true
     server:
       root_url: http://jaromero.cloud/grafana
       serve_from_sub_path: true
