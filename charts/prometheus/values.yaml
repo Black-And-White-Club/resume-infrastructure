@@ -22,9 +22,9 @@ grafana:
       device_limit: 10
       org_role: Viewer
     server:
-      domain: http://jaromero.cloud
+      domain: jaromero.cloud
       protocol: http
-      root_url: "%(protocol)s://%(domain)s:%(http_port)s/grafana/"
+      root_url: "%(protocol)s://%(domain)s:%(http_port)s/"
       serve_from_sub_path: true
   ingress:
     enabled: true
