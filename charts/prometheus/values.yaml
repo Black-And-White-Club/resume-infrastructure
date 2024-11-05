@@ -23,8 +23,10 @@ grafana:
       org_role: Viewer
     security:
       allow_embedding: true
+      cookie_secure: true
     server:
       root_url: https://jaromero.cloud/grafana
+      serve_from_sub_path: true
   ingress:
     enabled: true
     ingressClassName: nginx

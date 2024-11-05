@@ -122,7 +122,7 @@ resource "google_compute_firewall" "allow-health-checks" {
 
   allow {
     protocol = "tcp"
-    ports    = ["30645"]
+    ports    = ["30645", "32226"]
   }
 
   source_ranges = ["130.211.0.0/22", "35.191.0.0/16"]
