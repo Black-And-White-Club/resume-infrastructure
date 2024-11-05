@@ -2,4 +2,4 @@ crds:
   enabled: true
 prometheus:
   servicemonitor:
-    enabled: false
+    enabled: true
