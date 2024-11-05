@@ -22,22 +22,19 @@ grafana:
       device_limit: 10
       org_role: Viewer
     security:
-      cookie_secure: false
       allow_embedding: true
     server:
       root_url: https://jaromero.cloud/grafana
-      serve_from_sub_path: true
   ingress:
     enabled: true
     ingressClassName: nginx
     annotations:
-      kubernetes.io/ingress.class: nginx
-      kubernetes.io/tls-acme: true
+      kubernetes.io/tls-acme: "true"
       cert-manager.io/cluster-issuer: letsencrypt-staging
     hosts:
       - jaromero.cloud
     path: /grafana
     tls:
-      - hosts:
+      - secretName: ingress-cert
+        hosts:
           - jaromero.cloud
-        secretName: ingress-cert
