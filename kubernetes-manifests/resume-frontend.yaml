@@ -44,14 +44,14 @@ spec:
               chmod +x docker-credential-gcr
               mv docker-credential-gcr /usr/bin/
               docker-credential-gcr configure-docker --registries=us-central1-docker.pkg.dev
-              docker pull us-central1-docker.pkg.dev/resume-portfolio-project/portfolio-app-images-charts/resume-frontend:8cc1bd6
+              docker pull us-central1-docker.pkg.dev/resume-portfolio-project/portfolio-app-images-charts:0f6a0e5
           volumeMounts:
             - name: docker-sock
               mountPath: /var/run/docker.sock
       containers:
         - name: resume-frontend
-          # localimage: resume-frontend:8cc1bd6
-          image: us-central1-docker.pkg.dev/resume-portfolio-project/portfolio-app-images-charts/resume-frontend:8cc1bd6
+          # localimage: resume-frontend:0f6a0e5
+          image: us-central1-docker.pkg.dev/resume-portfolio-project/portfolio-app-images-charts/resume-frontend:0f6a0e5
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000
