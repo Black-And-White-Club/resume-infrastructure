@@ -2,6 +2,4 @@ crds:
   enabled: true
 prometheus:
   servicemonitor:
-    enabled: true
-global:
-  logLevel: 2
+    enabled: false
