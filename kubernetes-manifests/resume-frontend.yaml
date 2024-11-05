@@ -44,7 +44,7 @@ spec:
               chmod +x docker-credential-gcr
               mv docker-credential-gcr /usr/bin/
               docker-credential-gcr configure-docker --registries=us-central1-docker.pkg.dev
-              docker pull us-central1-docker.pkg.dev/resume-portfolio-project/portfolio-app-images-charts:0f6a0e5
+              docker pull us-central1-docker.pkg.dev/resume-portfolio-project/portfolio-app-images-charts/resume-backend:0f6a0e5
           volumeMounts:
             - name: docker-sock
               mountPath: /var/run/docker.sock
