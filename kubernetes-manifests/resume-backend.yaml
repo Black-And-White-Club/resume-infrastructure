@@ -61,7 +61,7 @@ spec:
             - name: ALLOWED_ORIGINS
               value: https://jaromero.cloud/
             - name: APP_ENV
-              value: prod
+              value: dev
           livenessProbe:
             httpGet:
               path: /healthz
