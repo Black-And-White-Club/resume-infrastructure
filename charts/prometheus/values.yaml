@@ -27,14 +27,14 @@ grafana:
       root_url: https://jaromero.cloud/grafana
   ingress:
     enabled: true
-    # ingressClassName: nginx
-    # annotations:
-    #   kubernetes.io/tls-acme: "true"
-    #   cert-manager.io/cluster-issuer: letsencrypt-staging
+    ingressClassName: nginx
+    annotations:
+      kubernetes.io/tls-acme: "true"
+      cert-manager.io/cluster-issuer: letsencrypt-prod
     hosts:
       - jaromero.cloud
     path: /grafana
-    # tls:
-    #   - secretName: ingress-cert
-    #     hosts:
-    #       - jaromero.cloud
+    tls:
+      - secretName: ingress-cert
+        hosts:
+          - jaromero.cloud
