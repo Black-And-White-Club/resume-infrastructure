@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cluster-resources
+  namespace: argocd
+spec:
+  project: resume-portfolio
+  source:
+    repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
+    targetRevision: main
+    path: cluster-resources
+  destination:
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
