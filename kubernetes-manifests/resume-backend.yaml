@@ -59,7 +59,7 @@ spec:
                 name: backend-db-credentials
           env:
             - name: ALLOWED_ORIGINS
-              value: https://jaromero.cloud
+              value: https://jaromero.cloud/
             - name: APP_ENV
               value: prod
           livenessProbe:
