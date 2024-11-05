@@ -17,7 +17,7 @@ spec:
               service:
                 name: resume-frontend-svc
                 port:
-                  number: 80
+                  number: 443
           - path: /api/count
             pathType: Prefix
             backend:
