@@ -59,9 +59,9 @@ spec:
                 name: backend-db-credentials
           env:
             - name: ALLOWED_ORIGINS
-              value: jaromero.cloud
+              value: https://jaromero.cloud
             - name: APP_ENV
-              value: dev
+              value: prod
           livenessProbe:
             httpGet:
               path: /healthz
