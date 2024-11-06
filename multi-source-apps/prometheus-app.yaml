@@ -6,3 +6,5 @@ app:
   chartVersion: "65.5.0"
   valueFiles: charts/prometheus/values.yaml
   namespace: prometheus
+  syncOptions:
+    ServerSideApply: "true"
