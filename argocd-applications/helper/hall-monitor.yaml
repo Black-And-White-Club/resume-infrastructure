@@ -23,7 +23,7 @@ spec:
         targetRevision: main
         path: "{{ .path.path }}"
         directory:
-          include: "*-appset.yaml"
+          exclude: "helper"
       destination:
         server: https://kubernetes.default.svc
         namespace: argocd
