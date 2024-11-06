@@ -23,7 +23,7 @@ spec:
         targetRevision: main
         path: "{{ .path.path }}"
         directory:
-          exclude: "helper"
+          exclude: "helper/*"
       destination:
         server: https://kubernetes.default.svc
         namespace: argocd
