@@ -15,6 +15,7 @@ spec:
       name: '{{ name }}'
       labels:
         app: '{{ app.name }}'
+        type: multi-source
     spec:
       project: resume-portfolio
       sources:

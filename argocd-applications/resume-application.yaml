@@ -3,6 +3,9 @@ kind: Application
 metadata:
   name: resume-app
   namespace: argocd
+  labels:
+    open: me-for-more
+    type: resume-application
 spec:
   project: resume-portfolio
   source:
