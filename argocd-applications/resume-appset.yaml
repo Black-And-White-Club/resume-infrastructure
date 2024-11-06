@@ -1,30 +1,33 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: resume-app
+  name: resume-app-components
   namespace: argocd
 spec:
   generators:
     - git:
         repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
         revision: main
-        directories:
-          - path: resume-app-manifests
+        files:
+          - path: "resume-app-manifests/*.yaml"
   template:
     metadata:
-      name: 'resume-app-{{ path.basename }}'
+      name: "resume-{{ path.basename }}"
       labels:
-        type: resume-application
+        app: resume-app
+        component: "{{ path.basenameNormalized }}"
+        type: resume-component
     spec:
       project: resume-portfolio
       source:
         repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
         targetRevision: main
-        path: '{{ path }}'
+        path: resume-app-manifests
+        targetPath: "{{ path }}"
       destination:
         server: https://kubernetes.default.svc
         namespace: resume-app
       syncPolicy:
         automated:
-          prune: false
-          selfHeal: false
+          prune: true
+          selfHeal: true

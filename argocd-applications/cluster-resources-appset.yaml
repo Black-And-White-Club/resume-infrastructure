@@ -12,9 +12,10 @@ spec:
           - path: cluster-resources
   template:
     metadata:
-      name: 'cluster-resources-{{ path.basename }}'
+      name: '{{ path.basename }}'
       labels:
         type: cluster-resources-management
+        open: me-for-more
     spec:
       project: resume-portfolio
       source:
@@ -25,5 +26,5 @@ spec:
         server: https://kubernetes.default.svc
       syncPolicy:
         automated:
-          prune: false
-          selfHeal: false
+          prune: true
+          selfHeal: true
