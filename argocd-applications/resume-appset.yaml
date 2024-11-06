@@ -4,6 +4,7 @@ metadata:
   name: resume-app-components
   namespace: argocd
 spec:
+  goTemplate: true
   generators:
     - git:
         repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
@@ -12,23 +13,23 @@ spec:
           - path: "resume-app-manifests/*.yaml"
   template:
     metadata:
-      name: 'resume-{{ path.basename }}'
+      name: '{{ .path.filenameNormalized }}'
       annotations:
         argocd.argoproj.io/tracking-id: '{{ path }}'
       labels:
         app: resume-app
-        component: '{{ path.basenameNormalized }}'
+        component: '{{ .path.basenameNormalized }}'
         type: resume-component
     spec:
       project: resume-portfolio
       source:
         repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
         targetRevision: main
-        path: '{{ path }}'
+        path: '{{ .path }}'
       destination:
         server: https://kubernetes.default.svc
         namespace: resume-app
-      # syncPolicy:
-      #   automated:
-      #     prune: true
-      #     selfHeal: true
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
