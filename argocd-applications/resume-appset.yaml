@@ -23,7 +23,9 @@ spec:
       source:
         repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
         targetRevision: main
-        path: resume-app-manifests/{{ .path.filename }}
+        path: "resume-app-manifests"
+        directory:
+          include: "{{ .path.filename }}"
       destination:
         server: https://kubernetes.default.svc
       syncPolicy:
