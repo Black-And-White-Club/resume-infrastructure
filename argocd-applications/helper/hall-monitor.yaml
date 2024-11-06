@@ -10,7 +10,7 @@ spec:
         repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
         revision: main
         files:
-          - path: "argocd-applications/*"
+          - path: "argocd-applications"
   template:
     metadata:
       name: '{{ trimSuffix ".yaml" .path.filename }}'
@@ -23,7 +23,7 @@ spec:
         targetRevision: main
         path: "{{ .path.path }}"
         directory:
-          exclude: "helper/*"
+          include: "*-appset.yaml"
       destination:
         server: https://kubernetes.default.svc
         namespace: argocd
