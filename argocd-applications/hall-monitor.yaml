@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: all-applicationsets
+  name: hall-monitor
   namespace: argocd
 spec:
   generators:
@@ -13,7 +13,7 @@ spec:
           - path: "argocd-applications/hall-monitor.yaml"
   template:
     metadata:
-      name: 'appset-{{ path.basename }}'
+      name: "appset-{{ path.basename }}"
       labels:
         type: applicationset-definition
     spec:
@@ -21,7 +21,7 @@ spec:
       source:
         repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
         targetRevision: main
-        path: '{{ path }}'
+        path: "{{ path }}"
       destination:
         server: https://kubernetes.default.svc
         namespace: argocd
