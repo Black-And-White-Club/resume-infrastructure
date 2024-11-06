@@ -31,9 +31,9 @@ spec:
       destination:
         server: https://kubernetes.default.svc
         namespace: '{{ app.namespace }}'
-      syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
-        syncOptions:
-          - '{{ if hasKey .app "serverSideApply" }}ServerSideApply={{ .app.serverSideApply }}{{ end }}'
+      # syncPolicy:
+      #   automated:
+      #     prune: true
+      #     selfHeal: true
+      #   syncOptions:
+      #     - '{{ if hasKey .app "serverSideApply" }}ServerSideApply={{ .app.serverSideApply }}{{ end }}'
