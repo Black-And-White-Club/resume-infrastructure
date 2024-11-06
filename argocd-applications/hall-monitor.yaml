@@ -4,6 +4,7 @@ metadata:
   name: hall-monitor
   namespace: argocd
 spec:
+  goTemplate: true
   generators:
     - git:
         repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
@@ -13,7 +14,7 @@ spec:
           - path: "argocd-applications/hall-monitor.yaml"
   template:
     metadata:
-      name: 'appset-{{ path.basename }}'
+      name: 'appset-{{ path | replace "/" "-" | replace "." "-" }}'
       labels:
         type: applicationset-definition
     spec:
