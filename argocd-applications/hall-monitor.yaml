@@ -11,7 +11,6 @@ spec:
         revision: main
         files:
           - path: "argocd-applications/*-appset.yaml"
-          - path: "argocd-applications/hall-monitor.yaml"
   template:
     metadata:
       name: '{{ .path.basename }}'
