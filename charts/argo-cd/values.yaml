@@ -17,9 +17,6 @@ metricsConfig: &metricsConfig
       endpoints:
         - port: metrics
 
-clusterRole:
-  enabled: true
-
 applicationSet:
   metrics:
     <<: *metricsConfig

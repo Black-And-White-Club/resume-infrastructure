@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: multi-source-applications
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - git:
+        repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
+        revision: main
+        directories:
+          - path: multi-source-argo-apps/*
+  template:
+    metadata:
+      name: '{{ metadata.name }}'
+    spec:
+      project: resume-portfolio
+      sources:
+        - repoURL: '{{ sources.repoURL }}'
+          targetRevision: '{{ sources.targetRevision }}'
+          chart: '{{ sources.chart }}'
+          helm:
+            valueFiles:
+              - '{{ helm.valueFiles }}'
+        - repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
+          path: '{{ sources.path }}'
+          targetRevision: main
+          ref: values
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{ destination.namespace }}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
