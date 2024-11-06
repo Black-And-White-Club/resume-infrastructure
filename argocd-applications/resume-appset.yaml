@@ -13,7 +13,7 @@ spec:
           - path: "resume-app-manifests/*.yaml"
   template:
     metadata:
-      name: '{{ .path.filename.trimSuffix "." }}'
+      name: '{{ trimSuffix "." .path.filename }}'
       labels:
         app: resume-app
         component: '{{ .path.basename }}'
