@@ -16,14 +16,14 @@ spec:
       name: '{{ trimSuffix "." .path.filename }}'
       labels:
         app: resume-app
-        component: '{{ .path.basename }}'
+        component: '{{ trimSuffix "." .path.filename }}'
         type: resume-component
     spec:
       project: resume-portfolio
       source:
         repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
         targetRevision: main
-        path: '{{ .path }}'
+        path: '{{ .path.path }}'
       destination:
         server: https://kubernetes.default.svc
       syncPolicy:
