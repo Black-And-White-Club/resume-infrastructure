@@ -12,7 +12,7 @@ spec:
           - path: "resume-app-manifests/*.yaml"
   template:
     metadata:
-      name: '{{ path.basename }}'
+      name: '{{ path.filename }}'
       labels:
         app: resume-app
         component: '{{ path.basenameNormalized }}'
