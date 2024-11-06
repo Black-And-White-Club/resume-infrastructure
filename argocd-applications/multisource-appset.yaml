@@ -4,33 +4,32 @@ metadata:
   name: multi-source-applications
   namespace: argocd
 spec:
-  goTemplate: true
-  goTemplateOptions: ["missingkey=error"]
   generators:
     - git:
         repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
         revision: main
-        directories:
-          - path: multi-source-argo-apps/*
+        files:
+          - path: "multi-source-apps/*.yaml"
   template:
     metadata:
-      name: '{{ metadata.name }}'
+      name: '{{ name }}'
+      labels:
+        app: '{{ app.name }}'
     spec:
       project: resume-portfolio
       sources:
-        - repoURL: '{{ sources.repoURL }}'
-          targetRevision: '{{ sources.targetRevision }}'
-          chart: '{{ sources.chart }}'
+        - repoURL: '{{ app.helmRepo }}'
+          chart: '{{ app.chart }}'
+          targetRevision: '{{ app.chartVersion }}'
           helm:
             valueFiles:
-              - '{{ helm.valueFiles }}'
-        - repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
-          path: '{{ sources.path }}'
+              - '$values/{{ app.valueFiles }}'
+        - repoURL: 'https://github.com/Black-And-White-Club/resume-infrastructure.git'
           targetRevision: main
           ref: values
       destination:
         server: https://kubernetes.default.svc
-        namespace: '{{ destination.namespace }}'
+        namespace: '{{ app.namespace }}'
       syncPolicy:
         automated:
           prune: true

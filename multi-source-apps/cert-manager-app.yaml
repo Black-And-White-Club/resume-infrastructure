@@ -1,0 +1,8 @@
+name: cert-manager
+app:
+  name: cert-manager
+  helmRepo: https://charts.jetstack.io
+  chart: cert-manager
+  chartVersion: "1.16.1"
+  valueFiles: charts/cert-manager/values.yaml
+  namespace: cert-manager
