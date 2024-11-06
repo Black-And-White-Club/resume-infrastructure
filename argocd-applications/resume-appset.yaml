@@ -16,7 +16,7 @@ spec:
       name: '{{ .path.filenameNormalized }}'
       labels:
         app: resume-app
-        component: '{{ .path.basenameNormalized }}'
+        component: '{{ .path.basename }}'
         type: resume-component
     spec:
       project: resume-portfolio
