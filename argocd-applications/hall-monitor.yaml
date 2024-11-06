@@ -13,7 +13,7 @@ spec:
           - path: "argocd-applications/*"
   template:
     metadata:
-      name: "{{ .path.basename }}"
+      name: '{{ trimSuffix ".yaml" .path.filename }}'
       labels:
         type: applicationset-definition
     spec:
