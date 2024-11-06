@@ -33,5 +33,5 @@ spec:
         namespace: '{{ app.namespace }}'
       syncPolicy:
         automated:
-          prune: true
-          selfHeal: true
+          prune: false
+          selfHeal: false
