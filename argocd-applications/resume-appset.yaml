@@ -15,7 +15,7 @@ spec:
       name: "resume-{{ path.basename }}"
       labels:
         app: resume-app
-        component: "{{ path.basenameNormalized }}"
+        component: '{{ path.basenameNormalized }}'
         type: resume-component
     spec:
       project: resume-portfolio
@@ -23,7 +23,7 @@ spec:
         repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
         targetRevision: main
         path: resume-app-manifests
-        targetPath: "{{ path }}"
+        targetPath: '{{ path }}'
       destination:
         server: https://kubernetes.default.svc
         namespace: resume-app
