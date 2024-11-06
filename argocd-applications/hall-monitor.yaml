@@ -14,7 +14,7 @@ spec:
           - path: "argocd-applications/hall-monitor.yaml"
   template:
     metadata:
-      name: 'appset-{{ path | replace "/" "-" | replace "." "-" }}'
+      name: 'appset-{{ path.dir }}-{{ path.basename }}'
       labels:
         type: applicationset-definition
     spec:
