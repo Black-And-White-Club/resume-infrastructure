@@ -12,7 +12,7 @@ spec:
           - path: "argocd-applications/*.yaml"
   template:
     metadata:
-      name: 'watcher-{{ path.basename | trimSuffix ".yaml" }}'
+      name: '{{ path }}'
       annotations:
         argocd.argoproj.io/tracking-id: '{{ path }}'
     spec:
