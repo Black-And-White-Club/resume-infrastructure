@@ -12,9 +12,9 @@ spec:
           - path: "resume-app-manifests/*.yaml"
   template:
     metadata:
-      name: 'resume-{{ path.basename }}'
+      name: 'resume-{{ path.basename | trimSuffix ".yaml" }}'
       annotations:
-        argocd.argoproj.io/tracking-id: '{{ path.basename }}'
+        argocd.argoproj.io/tracking-id: '{{ path }}'
       labels:
         app: resume-app
         component: '{{ path.basenameNormalized }}'
@@ -24,8 +24,7 @@ spec:
       source:
         repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
         targetRevision: main
-        path: resume-app-manifests
-        targetPath: '{{ path }}'
+        path: '{{ path | dir }}'
       destination:
         server: https://kubernetes.default.svc
         namespace: resume-app
