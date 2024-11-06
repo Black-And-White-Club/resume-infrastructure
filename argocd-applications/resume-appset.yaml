@@ -14,8 +14,6 @@ spec:
   template:
     metadata:
       name: '{{ .path.filenameNormalized }}'
-      annotations:
-        argocd.argoproj.io/tracking-id: '{{ path }}'
       labels:
         app: resume-app
         component: '{{ .path.basenameNormalized }}'
