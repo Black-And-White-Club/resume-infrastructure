@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: hall-monitor
+  name: overmind
   namespace: argocd
 spec:
   goTemplate: true
@@ -11,8 +11,6 @@ spec:
         revision: main
         files:
           - path: "argocd-applications/*"
-          - path: "argocd-applications/*-appset.yaml"
-            exclude: true
   template:
     metadata:
       name: '{{ trimSuffix ".yaml" .path.filename }}'
@@ -25,7 +23,7 @@ spec:
         targetRevision: main
         path: "{{ .path.path }}"
         directory:
-          include: "*-appset.yaml"
+          include: "{{ .path.filename }}"
       destination:
         server: https://kubernetes.default.svc
         namespace: argocd
