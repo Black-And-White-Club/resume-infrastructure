@@ -10,5 +10,6 @@ app:
     ServerSideApply: "true"
     ApplyOutOfSyncOnly: "true"
 
-  repoAdd: prometheus-community https://prometheus-community.github.io/helm-charts
+  repoName: prometheus-community
+  repoUrl: https://prometheus-community.github.io/helm-charts
   showChart: prometheus-community/kube-prometheus-stack

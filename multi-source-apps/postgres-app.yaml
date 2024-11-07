@@ -8,5 +8,6 @@ app:
   namespace: postgres
 
   # Not ideal but just trying to get update workflow to work
-  repoAdd: bitnami https://charts.bitnami.com/bitnami
+  repoName: bitnami
+  repoUrl: https://charts.bitnami.com/bitnami
   showChart: bitnami/postgresql
