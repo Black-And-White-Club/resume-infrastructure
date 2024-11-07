@@ -42,7 +42,6 @@ grafana:
           - jaromero.cloud
   persistence:
     enabled: true
-    type: sts
     storageClassName: ""
     existingClaim: grafana-local-pvc
     accessModes:
