@@ -46,6 +46,13 @@ jobs:
             fi
           done
 
+      - name: Checkout Infrastructure Repo to Update Versions
+        uses: actions/checkout@v4
+        with:
+          repository: Black-And-White-Club/resume-infrastructure
+          token: ${{ secrets.INFRASTRUCTURE_REPO_TOKEN }}
+          path: resume-infrastructure
+
       - name: Commit and Push Changes (if any)
         run: |
           git config --global user.name "github-actions[bot]"
