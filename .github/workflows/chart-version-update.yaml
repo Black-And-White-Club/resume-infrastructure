@@ -1,0 +1,57 @@
+name: Updat Helm Chart Versions In Multi-Source-Apps Directory
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  push:
+    branches: main
+
+jobs:
+  update-charts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Helm
+        uses: azure/setup-helm@v4.2.0
+
+      - name: Install yq
+        run: |
+          snap install yq
+
+      - name: Fetch Latest Chart Versions (looping through files)
+        run: |
+          for file in $(find ./multi-source-apps -type f); do
+            CHART_NAME=$(yq eval '.app.showChart' "$file")
+            CURRENT_VERSION=$(yq eval '.app.chartVersion' "$file")
+
+            # Add the repository if necessary (using repoAdd field)
+            REPO_ADD=$(yq eval '.app.repoAdd' "$file")
+            if [[ -n "$REPO_ADD" ]]; then
+              helm repo add "$REPO_ADD"
+            fi
+
+            # Fetch the latest version using helm show chart
+            LATEST_VERSION=$(helm show chart "$CHART_NAME" | yq eval '.version')
+
+            if [[ "$LATEST_VERSION" != "$CURRENT_VERSION" ]]; then
+              yq eval '.app.chartVersion = "'"$LATEST_VERSION"'"' "$file" -i
+              echo "Updated $file with chart version: $LATEST_VERSION"
+            else
+              echo "No update needed for $file (current: $CURRENT_VERSION)"
+            fi
+          done
+
+      - name: Commit and Push Changes (if any)
+        run: |
+          git config --global user.name "github-actions[bot]
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          # Only commit if there are changes
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Update Multi Source Helm Chart Versions"
+            git push origin main
+          fi

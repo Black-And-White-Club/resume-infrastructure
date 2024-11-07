@@ -6,3 +6,7 @@ app:
   chartVersion: "16.1.0"
   valueFiles: charts/postgres/values.yaml
   namespace: postgres
+
+  # Not ideal but just trying to get update workflow to work
+  repoAdd: bitnami https://charts.bitnami.com/bitnami
+  showChart: bitnami/postgresql

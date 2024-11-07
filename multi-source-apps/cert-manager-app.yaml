@@ -6,3 +6,6 @@ app:
   chartVersion: "1.16.1"
   valueFiles: charts/cert-manager/values.yaml
   namespace: cert-manager
+
+  repoAd: cert-manager https://charts.jetstack.io
+  showChart: cert-manager/cert-manager
