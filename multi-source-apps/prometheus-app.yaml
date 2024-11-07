@@ -3,13 +3,12 @@ app:
   name: prometheus
   helmRepo: https://prometheus-community.github.io/helm-charts
   chart: kube-prometheus-stack
-  chartVersion: "65.5.0"
+  chartVersion: "65.8.1"
   valueFiles: charts/prometheus/values.yaml
   namespace: prometheus
   syncOptions:
     ServerSideApply: "true"
     ApplyOutOfSyncOnly: "true"
-
   repoName: prometheus-community
   repoUrl: https://prometheus-community.github.io/helm-charts
   showChart: prometheus-community/kube-prometheus-stack

@@ -3,10 +3,9 @@ app:
   name: postgres
   helmRepo: registry-1.docker.io
   chart: bitnamicharts/postgresql
-  chartVersion: "16.1.0"
+  chartVersion: "16.1.2"
   valueFiles: charts/postgres/values.yaml
   namespace: postgres
-
   # Not ideal but just trying to get update workflow to work
   repoName: bitnami
   repoUrl: https://charts.bitnami.com/bitnami
