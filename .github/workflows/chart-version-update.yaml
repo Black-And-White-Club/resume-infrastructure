@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Helm
         uses: azure/setup-helm@v4.2.0
@@ -45,13 +47,6 @@ jobs:
               echo "No update needed for $file (current: $CURRENT_VERSION)"
             fi
           done
-
-      - name: Checkout Infrastructure Repo to Update Versions
-        uses: actions/checkout@v4
-        with:
-          repository: Black-And-White-Club/resume-infrastructure
-          token: ${{ secrets.INFRASTRUCTURE_REPO_TOKEN }}
-          path: resume-infrastructure
 
       - name: Commit and Push Changes (if any)
         run: |
