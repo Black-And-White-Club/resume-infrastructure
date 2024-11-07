@@ -9,7 +9,7 @@ resource "google_compute_instance" "resume-project-vm" {
 
     initialize_params {
       image = "projects/debian-cloud/global/images/debian-12-bookworm-v20241009"
-      size  = 30
+      size  = 40
       type  = "pd-standard"
     }
 
@@ -32,7 +32,7 @@ resource "google_compute_instance" "resume-project-vm" {
     goog-ops-agent-policy = "v2-x86-template-1-3-0"
   }
 
-  machine_type = "t2d-standard-4"
+  machine_type = "n2d-highmem-2"
 
   metadata = {
     enable-osconfig = "TRUE"
