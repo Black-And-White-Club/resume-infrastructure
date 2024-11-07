@@ -18,7 +18,7 @@ jobs:
 
       - name: Install yq
         run: |
-          snap install yq
+          sudo snap install yq
 
       - name: Fetch Latest Chart Versions (looping through files)
         run: |
