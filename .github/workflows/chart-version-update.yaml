@@ -3,8 +3,6 @@ name: Updat Helm Chart Versions In Multi-Source-Apps Directory
 on:
   schedule:
     - cron: "0 0 * * *"
-  push:
-    branches: main
 
 jobs:
   update-charts:

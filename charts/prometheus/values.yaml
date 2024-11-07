@@ -16,6 +16,13 @@ prometheus:
     serviceMonitorSelector: {}
     serviceMonitorSelectorNilUsesHelmValues: false
 grafana:
+  persistence:
+    enabled: true
+    storageClassName: ""
+    existingClaim: grafana-local-pvc
+    accessModes:
+      - ReadWriteOnce
+    size: 5Gi
   grafana.ini:
     auth.anonymous:
       enabled: true
