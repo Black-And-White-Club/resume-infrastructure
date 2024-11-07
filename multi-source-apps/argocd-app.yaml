@@ -6,6 +6,9 @@ app:
   chartVersion: "7.7.0"
   valueFiles: charts/argo-cd/values.yaml
   namespace: argocd
+  ssa: ServerSideApply=false
+
+  # Not ideal but just trying to get update workflow to work
   repoName: argo
   repoUrl: https://argoproj.github.io/argo-helm/
   showChart: argo/argo-cd

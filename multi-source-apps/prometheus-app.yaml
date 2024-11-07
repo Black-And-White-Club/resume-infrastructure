@@ -6,9 +6,9 @@ app:
   chartVersion: "65.8.1"
   valueFiles: charts/prometheus/values.yaml
   namespace: prometheus
-  syncOptions:
-    ServerSideApply: "true"
-    ApplyOutOfSyncOnly: "true"
+  ssa: ServerSideApply=true
+
+  # Not ideal but just trying to get update workflow to work
   repoName: prometheus-community
   repoUrl: https://prometheus-community.github.io/helm-charts
   showChart: prometheus-community/kube-prometheus-stack

@@ -6,6 +6,9 @@ app:
   chartVersion: "v1.16.1"
   valueFiles: charts/cert-manager/values.yaml
   namespace: cert-manager
+  ssa: ServerSideApply=false
+
+  # Not ideal but just trying to get update workflow to work
   repoName: cert-manager
   repoUrl: https://charts.jetstack.io
   showChart: cert-manager/cert-manager

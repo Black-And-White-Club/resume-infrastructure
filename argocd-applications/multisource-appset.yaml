@@ -16,6 +16,8 @@ spec:
       labels:
         app: "{{ app.name }}"
         type: multi-source
+      annotations:
+        argocd.argoproj.io/sync-options: "{{ app.ssa }}"
     spec:
       project: resume-portfolio
       sources:
@@ -35,6 +37,3 @@ spec:
         automated:
           prune: true
           selfHeal: true
-        syncOptions:
-          - '{{ if hasKey .app "ServerSideApply" }}ServerSideApply={{ .app.ServerSideApply }}{{ end }}'
-          - '{{ if hasKey .app "ApplyOutOfSyncOnly" }}ApplyOutOfSyncOnly={{ .app.ApplyOutOfSyncOnly }}{{ end }}'

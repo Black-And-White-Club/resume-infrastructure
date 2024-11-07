@@ -6,6 +6,8 @@ app:
   chartVersion: "16.1.2"
   valueFiles: charts/postgres/values.yaml
   namespace: postgres
+  ssa: ServerSideApply=false
+
   # Not ideal but just trying to get update workflow to work
   repoName: bitnami
   repoUrl: https://charts.bitnami.com/bitnami
