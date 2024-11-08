@@ -51,12 +51,11 @@ resource "google_compute_firewall" "allow-kubernetes-internal" {
 
   allow {
     protocol = "tcp"
-    ports    = ["10250", "10248", "6443"] # Kubelet, health check, and API server ports
+    ports    = ["10250", "10248", "6443", "10254"] # Kubelet, health check, and API server ports
   }
 
-  # Removed the UDP port for Flannel (8472)
   source_ranges = ["10.128.0.0/20"]
-  target_tags   = ["kubernetes-node"]
+  target_tags   = ["kubernetes-node", "nginx-ingress"]
 }
 
 resource "google_compute_firewall" "allow-ssh" {
