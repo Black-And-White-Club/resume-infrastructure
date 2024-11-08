@@ -28,7 +28,7 @@ primary:
   persistence:
     volumeName: "db-storage"
     existingClaim: "db-storage"
-    storageClass: ""
+    storageClass: "-"
     accessModes:
       - ReadWriteOnce
     size: 8Gi
