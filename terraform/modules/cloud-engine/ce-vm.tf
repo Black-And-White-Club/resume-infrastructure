@@ -32,13 +32,12 @@ resource "google_compute_instance" "resume-project-vm" {
     goog-ops-agent-policy = "v2-x86-template-1-3-0"
   }
 
-  machine_type = "n2d-highmem-2"
+  machine_type = "t2d-standard-4"
 
   metadata = {
     enable-osconfig = "TRUE"
   }
 
-  # Reference the subnetwork created in network.tf
   network_interface {
     subnetwork = google_compute_subnetwork.main.id
     access_config {
@@ -72,7 +71,6 @@ resource "google_compute_instance" "resume-project-vm" {
     enable_vtpm                 = true
   }
 
-  # Tags for firewall rules
   tags = [
     "argocd",
     "backend-app",
@@ -87,6 +85,7 @@ resource "google_compute_instance" "resume-project-vm" {
     "nginx-ingress",
   ]
 }
+
 
 // PVC for PostgresSQL
 // https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_disk

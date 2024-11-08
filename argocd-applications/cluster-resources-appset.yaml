@@ -12,7 +12,7 @@ spec:
           - path: cluster-resources
   template:
     metadata:
-      name: '{{ path.basename }}'
+      name: "{{ path.basename }}"
       labels:
         type: cluster-resources-management
         open: me-for-more
@@ -21,10 +21,10 @@ spec:
       source:
         repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
         targetRevision: main
-        path: '{{ path }}'
+        path: "{{ path }}"
       destination:
         server: https://kubernetes.default.svc
-      syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
+      # syncPolicy:
+      #   automated:
+      #     prune: true
+      #     selfHeal: true
