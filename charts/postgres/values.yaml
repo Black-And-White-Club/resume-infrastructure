@@ -5,6 +5,7 @@ auth:
   username: backend_api
   existingSecret: postgresql-secret
   secretKeys:
+    adminPasswordKey: postgres-pasword
     userPasswordKey: postgresql-password
 
 architecture: standalone
