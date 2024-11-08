@@ -69,3 +69,5 @@ server:
             app.kubernetes.io/component: server
         endpoints:
           - path: /metrics
+redisSecretInit:
+  enabled: false
