@@ -3,11 +3,10 @@ app:
   name: prometheus
   helmRepo: https://prometheus-community.github.io/helm-charts
   chart: kube-prometheus-stack
-  chartVersion: "65.8.1"
+  chartVersion: "66.0.0"
   valueFiles: charts/prometheus/values.yaml
   namespace: prometheus
   ssa: ServerSideApply=true
-
   # Not ideal but just trying to get update workflow to work
   repoName: prometheus-community
   repoUrl: https://prometheus-community.github.io/helm-charts
