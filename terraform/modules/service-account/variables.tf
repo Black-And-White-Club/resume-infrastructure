@@ -16,18 +16,8 @@ variable "service_account_id" {
   sensitive   = true
 }
 
-variable "service_account_display_name" {
-  description = "The display name for the service account"
-  type        = string
-}
-
 variable "service_account_email" {
   description = "Service account email"
   type        = string
   sensitive   = true
 }
-variable "zone" {
-  type        = string
-  description = "The Zone to deploy GCP Resources"
-}
-

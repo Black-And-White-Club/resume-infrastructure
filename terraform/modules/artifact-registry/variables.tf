@@ -14,8 +14,3 @@ variable "repo_name" {
   type        = string
   sensitive   = true
 }
-
-variable "zone" {
-  type        = string
-  description = "The Zone to deploy GCP Resources"
-}

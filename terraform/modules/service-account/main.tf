@@ -3,6 +3,11 @@ data "google_service_account" "default" {
   project    = var.project_id
 }
 
+resource "google_service_account" "default" {
+  account_id = var.service_account_id
+  project    = var.project_id
+}
+
 resource "google_project_iam_member" "compute_engine_admin" {
   project = var.project_id
   role    = "roles/compute.admin"
