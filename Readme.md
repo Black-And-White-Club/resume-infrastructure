@@ -1,6 +1,58 @@
-IaC Repo that consists of the actual frontend and backend of the application, using Go for the backend API and Astro for the frontend
-ArgoCD managed via Helm Charts but also manages/monitors the deployments of the Helm Charts and Manifest
-Helm Charts that are being used are ArgoCD (as mentiomed above) Kube-Prometheus-Stack (contains Prometheus and Grafana, Cert Manager, and Bitnamis Helm Chart for Postgres. 
-You will notice that the there are really only Values.yml files and then a coresponding manifest which is referenced in the Mult Source Appset Manifests. 
+# Resume Infrastructure
 
-saving for now TODO Rest of it 
+This repository houses the Infrastructure-as-Code (IaC) for my personal resume website. It leverages a modern cloud-native stack to ensure a robust, scalable, and easily manageable deployment.
+
+## Technologies Used
+
+**Infrastructure:**
+
+- **Terraform**
+- **Google Cloud Platform (GCP)**
+- **Artifact Registry**
+
+**Deployment & Management:**
+
+- **Kubernetes**
+- **Helm**
+  - [Argo CD](https://artifacthub.io/packages/helm/argo/argo-cd)
+  - [Kube Prometheus Stack](https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack)
+  - [Cert Manager](https://artifacthub.io/packages/helm/jetstack/cert-manager)
+  - [Bitnami Postgres](https://artifacthub.io/packages/helm/bitnami/postgresql)
+- **Argo CD**
+
+**Application:**
+
+- **Go** (backend API) - [Source Code](https://github.com/Black-And-White-Club/resume-backend)
+- **Astro** (frontend) - [Source Code](https://github.com/Black-And-White-Club/resume-frontend)
+- **Nginx**
+
+**Monitoring & Observability:**
+
+- **Prometheus**
+- **Grafana**
+- **Cert-Manager**
+
+**Data:**
+
+- **Postgres**
+
+## Repository Structure
+
+```bash
+.
+├── argocd-applications
+├── charts
+│   ├── argo-cd
+│   ├── cert-manager
+│   ├── postgres
+│   └── prometheus
+├── cluster-resources
+├── multi-source-apps
+├── resume-app-manifests
+├── terraform
+│   └── modules
+│       ├── artifact-registry
+│       ├── cloud-engine
+│       └── service-account
+└── the-overmind
+```
