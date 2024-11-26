@@ -1,6 +1,6 @@
 # Resume Infrastructure
 
-This repository houses the Infrastructure-as-Code (IaC) for my personal resume website. It leverages a modern cloud-native stack to ensure a robust, scalable, and easily manageable deployment.
+This repository houses the Infrastructure-as-Code (IaC) for my personal resume website. It leverages a variety of tools and technologies that I've learned while transitioning from QA Automation to DevOps. This project is built using primarily free and open-source tools, along with trial credits from Google Cloud Platform (GCP).
 
 ## Technologies Used
 
