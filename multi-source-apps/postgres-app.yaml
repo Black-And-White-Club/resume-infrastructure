@@ -3,7 +3,7 @@ app:
   name: postgres
   helmRepo: registry-1.docker.io
   chart: bitnamicharts/postgresql
-  chartVersion: "16.3.5"
+  chartVersion: "16.4.2"
   valueFiles: charts/postgres/values.yaml
   namespace: postgres
   ssa: ServerSideApply=false
