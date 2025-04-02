@@ -3,7 +3,7 @@ app:
   name: argocd
   helmRepo: https://argoproj.github.io/argo-helm
   chart: argo-cd
-  chartVersion: "7.8.16"
+  chartVersion: "7.8.19"
   valueFiles: charts/argo-cd/values.yaml
   namespace: argocd
   ssa: ServerSideApply=false
