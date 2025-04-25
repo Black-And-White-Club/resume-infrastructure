@@ -3,7 +3,7 @@ app:
   name: cert-manager
   helmRepo: https://charts.jetstack.io
   chart: cert-manager
-  chartVersion: "v1.17.1"
+  chartVersion: "v1.17.2"
   valueFiles: charts/cert-manager/values.yaml
   namespace: cert-manager
   ssa: ServerSideApply=false
