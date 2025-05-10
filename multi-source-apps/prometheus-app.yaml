@@ -3,7 +3,7 @@ app:
   name: prometheus
   helmRepo: https://prometheus-community.github.io/helm-charts
   chart: kube-prometheus-stack
-  chartVersion: "72.2.0"
+  chartVersion: "72.3.0"
   valueFiles: charts/prometheus/values.yaml
   namespace: prometheus
   ssa: ServerSideApply=true
