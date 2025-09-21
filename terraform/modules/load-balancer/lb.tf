@@ -9,7 +9,7 @@ resource "google_compute_health_check" "default" {
 
   http_health_check {
     port         = var.backend_http_port
-    request_path = "/"
+    request_path = "/healthz"
   }
 }
 
