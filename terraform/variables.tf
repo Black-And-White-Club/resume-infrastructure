@@ -33,3 +33,9 @@ variable "local_ip" {
   description = "Local IP address for firewall rules"
   type        = list(string)
 }
+
+variable "backend_http_port" {
+  description = "Port on backend instances (NodePort or service) that LB will send HTTP traffic to"
+  type        = number
+  default     = 30645
+}

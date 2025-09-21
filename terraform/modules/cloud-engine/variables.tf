@@ -25,3 +25,9 @@ variable "zone" {
   type        = string
   description = "The Zone to deploy GCP Resources"
 }
+
+variable "backend_http_port" {
+  type        = number
+  description = "Port used by the ingress/nodeport that the external LB will target"
+  default     = 30645
+}

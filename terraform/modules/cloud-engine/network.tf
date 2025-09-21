@@ -107,11 +107,14 @@ resource "google_compute_firewall" "allow-lb-to-ingress" {
 
   allow {
     protocol = "tcp"
-    ports    = ["80", "443", "30645", "32226"]
+    ports    = ["80", "443", tostring(var.backend_http_port)]
   }
 
-  source_ranges = ["35.208.254.34"]
-  target_tags   = ["nginx-ingress"]
+  source_ranges = [
+    "35.191.0.0/16", # Google LB proxies
+    "130.211.0.0/22" # Google LB proxies
+  ]
+  target_tags = ["nginx-ingress", "traefik"]
 }
 
 resource "google_compute_firewall" "allow-health-checks" {
@@ -121,9 +124,12 @@ resource "google_compute_firewall" "allow-health-checks" {
 
   allow {
     protocol = "tcp"
-    ports    = ["30645", "32226"]
+    ports    = ["80", "443", tostring(var.backend_http_port)]
   }
 
-  source_ranges = ["130.211.0.0/22", "35.191.0.0/16"]
-  target_tags   = ["kubernetes-node"]
+  source_ranges = [
+    "35.191.0.0/16",
+    "130.211.0.0/22"
+  ]
+  target_tags = ["kubernetes-node", "nginx-ingress", "traefik"]
 }
