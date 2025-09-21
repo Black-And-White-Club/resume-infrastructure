@@ -133,3 +133,17 @@ resource "google_compute_firewall" "allow-health-checks" {
   ]
   target_tags = ["kubernetes-node", "nginx-ingress", "traefik"]
 }
+
+resource "google_compute_firewall" "allow-argocd-external" {
+  name    = "allow-argocd-external"
+  network = google_compute_network.main.name
+  project = var.project_id
+
+  allow {
+    protocol = "tcp"
+    ports    = ["443"] # ArgoCD web interface
+  }
+
+  source_ranges = var.local_ip
+  target_tags   = ["argocd"]
+}
