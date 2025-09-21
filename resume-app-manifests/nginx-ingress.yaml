@@ -32,7 +32,3 @@ spec:
                 name: resume-backend-svc
                 port:
                   number: 8000
-  tls:
-    - hosts:
-        - jaromero.cloud
-      secretName: ingress-cert
