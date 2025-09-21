@@ -13,10 +13,10 @@ spec:
   ports:
     - name: web-port
       port: 443
-      targetPort: 3000
+      targetPort: 80
     - name: http
       port: 80
-      targetPort: 3000
+      targetPort: 80
   type: ClusterIP
 
 ---
@@ -57,7 +57,7 @@ spec:
           image: us-central1-docker.pkg.dev/resume-portfolio-project/portfolio-app-images-charts/resume-frontend:780a7d0
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 3000
+            - containerPort: 80
       volumes:
         - name: docker-sock
           hostPath:
