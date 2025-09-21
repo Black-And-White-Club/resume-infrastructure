@@ -664,3 +664,11 @@ webhooks:
         resources:
           - ingresses
     sideEffects: None
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: custom-headers
+  namespace: ingress-nginx
+data:
+  X-Forwarded-Proto: "https"
