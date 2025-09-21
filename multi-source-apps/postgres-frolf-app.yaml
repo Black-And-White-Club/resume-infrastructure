@@ -1,0 +1,12 @@
+name: postgres-frolf
+app:
+  name: postgres-frolf
+  helmRepo: https://charts.bitnami.com/bitnami
+  chart: postgresql
+  chartVersion: "16.7.9"
+  valueFiles: charts/postgres-frolf/values.yaml
+  namespace: postgres-frolf
+  ssa: ServerSideApply=false
+  repoName: bitnami
+  repoUrl: https://charts.bitnami.com/bitnami
+  showChart: bitnami/postgresql
