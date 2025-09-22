@@ -52,3 +52,6 @@ grafana:
     size: 5Gi
     finalizers:
       - kubernetes.io/pvc-protection
+  securityContext:
+    fsGroup: 472
+  initChownData: false
