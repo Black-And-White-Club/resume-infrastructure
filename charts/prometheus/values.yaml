@@ -54,4 +54,5 @@ grafana:
       - kubernetes.io/pvc-protection
   securityContext:
     fsGroup: 472
-  initChownData: false
+  initChownData:
+    enabled: false
