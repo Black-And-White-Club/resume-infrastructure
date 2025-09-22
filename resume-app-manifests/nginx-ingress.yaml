@@ -9,7 +9,8 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - http:
+    - host: jaromero.cloud
+      http:
         paths:
           - path: /
             pathType: Prefix
