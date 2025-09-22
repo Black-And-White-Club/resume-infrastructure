@@ -16,6 +16,9 @@ prometheus:
     serviceMonitorSelector: {}
     serviceMonitorSelectorNilUsesHelmValues: false
 grafana:
+  adminUser: admin
+  adminPasswordSecret: grafana-admin-secret
+  adminPasswordKey: admin-password
   grafana.ini:
     auth.anonymous:
       enabled: true
