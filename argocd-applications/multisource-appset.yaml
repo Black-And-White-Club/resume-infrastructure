@@ -4,6 +4,7 @@ metadata:
   name: multi-source-applications
   namespace: argocd
 spec:
+  goTemplate: true
   generators:
     - git:
         repoURL: https://github.com/Black-And-White-Club/resume-infrastructure.git
@@ -12,27 +13,27 @@ spec:
           - path: "multi-source-apps/*.yaml"
   template:
     metadata:
-      name: "{{ name }}"
+      name: "{{ .name }}"
       labels:
-        app: "{{ app.name }}"
+        app: "{{ .app.name }}"
         type: multi-source
       annotations:
-        argocd.argoproj.io/sync-options: "{{ app.ssa }}"
+        argocd.argoproj.io/sync-options: "{{ .app.ssa }}"
     spec:
       project: resume-portfolio
       sources:
-        - repoURL: "{{ app.helmRepo }}"
-          chart: "{{ app.chart }}"
-          targetRevision: "{{ app.chartVersion }}"
+        - repoURL: "{{ .app.helmRepo }}"
+          chart: "{{ .app.chart }}"
+          targetRevision: "{{ .app.chartVersion }}"
           helm:
             valueFiles:
-              - "$values/{{ app.valueFiles }}"
+              - "$values/{{ .app.valueFiles }}"
         - repoURL: "https://github.com/Black-And-White-Club/resume-infrastructure.git"
           targetRevision: main
           ref: values
       destination:
         server: https://kubernetes.default.svc
-        namespace: "{{ app.namespace }}"
+        namespace: "{{ .app.namespace }}"
       # syncPolicy:
       #   automated:
       #     prune: true
