@@ -22,6 +22,18 @@ resource "google_compute_instance" "resume-project-vm" {
     device_name = "db-storage"
   }
 
+  attached_disk {
+    source      = data.google_compute_disk.frolf_bot_postgres.self_link
+    mode        = "READ_WRITE"
+    device_name = "frolf-bot-postgres"
+  }
+
+  attached_disk {
+    source      = data.google_compute_disk.frolf_bot_grafana.self_link
+    mode        = "READ_WRITE"
+    device_name = "frolf-bot-grafana"
+  }
+
   can_ip_forward            = true
   deletion_protection       = false
   enable_display            = false
@@ -95,4 +107,20 @@ resource "google_compute_disk" "db_storage" {
   zone    = var.zone
   type    = "pd-standard"
   size    = 10
+}
+
+// Storage Disks for Frolf-Bot
+// Has to be attached here because all of the VM stuff is here 
+// Sorry... I didn't expect to have multiple projects so this will need to be cleaned up in the future if
+// I ever separate the apps from each other. 
+data "google_compute_disk" "frolf_bot_postgres" {
+  name    = "frolf-bot-postgres-disk"
+  project = var.project_id
+  zone    = var.zone
+}
+
+data "google_compute_disk" "frolf_bot_grafana" {
+  name    = "frolf-bot-grafana-disk"
+  project = var.project_id
+  zone    = var.zone
 }
