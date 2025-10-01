@@ -48,6 +48,7 @@ resource "google_compute_instance" "resume-project-vm" {
 
   metadata = {
     enable-osconfig = "TRUE"
+    startup-script  = file("${path.module}/mount-disks.sh")
   }
 
   network_interface {
