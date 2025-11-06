@@ -25,6 +25,11 @@ kind: Deployment
 metadata:
   name: resume-frontend
   namespace: resume-app
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: frontend=iad.ocir.io/id2uwn5pyixh/resume/frontend
+    argocd-image-updater.argoproj.io/frontend.update-strategy: latest
+    argocd-image-updater.argoproj.io/frontend.allow-tags: regexp:^[0-9a-f]{7}$
+    argocd-image-updater.argoproj.io/frontend.pull-secret: pullsecret:resume-app/ocir-secret
 spec:
   replicas: 1
   selector:
@@ -35,30 +40,11 @@ spec:
       labels:
         app: resume-frontend
     spec:
-      initContainers:
-        - name: install-and-pull-image
-          image: docker:cli
-          command: ["/bin/sh", "-c"]
-          args:
-            - |
-              apk add curl
-              curl -fsSL "https://github.com/GoogleCloudPlatform/docker-credential-gcr/releases/download/v2.1.25/docker-credential-gcr_linux_amd64-2.1.25.tar.gz" \
-                | tar xz docker-credential-gcr
-              chmod +x docker-credential-gcr
-              mv docker-credential-gcr /usr/bin/
-              docker-credential-gcr configure-docker --registries=us-central1-docker.pkg.dev
-              docker pull us-central1-docker.pkg.dev/resume-portfolio-project/portfolio-app-images-charts/resume-frontend:d45becf
-          volumeMounts:
-            - name: docker-sock
-              mountPath: /var/run/docker.sock
+      imagePullSecrets:
+        - name: ocir-secret
       containers:
         - name: resume-frontend
-          # localimage: resume-frontend:d45becf
-          image: us-central1-docker.pkg.dev/resume-portfolio-project/portfolio-app-images-charts/resume-frontend:d45becf
-          imagePullPolicy: IfNotPresent
+          image: iad.ocir.io/id2uwn5pyixh/resume/frontend:94ab36a
+          imagePullPolicy: Always
           ports:
             - containerPort: 3000
-      volumes:
-        - name: docker-sock
-          hostPath:
-            path: /var/run/docker.sock

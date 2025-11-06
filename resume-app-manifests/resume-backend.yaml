@@ -21,6 +21,11 @@ kind: Deployment
 metadata:
   name: resume-backend
   namespace: resume-app
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: backend=iad.ocir.io/id2uwn5pyixh/resume/backend
+    argocd-image-updater.argoproj.io/backend.update-strategy: latest
+    argocd-image-updater.argoproj.io/backend.allow-tags: regexp:^[0-9a-f]{7}$
+    argocd-image-updater.argoproj.io/backend.pull-secret: pullsecret:resume-app/ocir-secret
 spec:
   replicas: 1
   selector:
@@ -31,27 +36,12 @@ spec:
       labels:
         app: resume-backend
     spec:
-      initContainers:
-        - name: install-and-pull-image
-          image: docker:cli
-          command: ["/bin/sh", "-c"]
-          args:
-            - |
-              apk add curl
-              curl -fsSL "https://github.com/GoogleCloudPlatform/docker-credential-gcr/releases/download/v2.1.25/docker-credential-gcr_linux_amd64-2.1.25.tar.gz" \
-                | tar xz docker-credential-gcr
-              chmod +x docker-credential-gcr
-              mv docker-credential-gcr /usr/bin/
-              docker-credential-gcr configure-docker --registries=us-central1-docker.pkg.dev
-              docker pull us-central1-docker.pkg.dev/resume-portfolio-project/portfolio-app-images-charts/resume-backend:3635eca
-          volumeMounts:
-            - name: docker-sock
-              mountPath: /var/run/docker.sock
+      imagePullSecrets:
+        - name: ocir-secret
       containers:
         - name: resume-backend
-          #localimage: resume-backend:3635eca
-          image: us-central1-docker.pkg.dev/resume-portfolio-project/portfolio-app-images-charts/resume-backend:3635eca
-          imagePullPolicy: IfNotPresent
+          image: iad.ocir.io/id2uwn5pyixh/resume/backend:a5cb7d5
+          imagePullPolicy: Always
           ports:
             - containerPort: 8000
           envFrom:
@@ -74,10 +64,6 @@ spec:
               port: 8000
             initialDelaySeconds: 30
             timeoutSeconds: 1
-      volumes:
-        - name: docker-sock
-          hostPath:
-            path: /var/run/docker.sock
 
 ---
 apiVersion: monitoring.coreos.com/v1
