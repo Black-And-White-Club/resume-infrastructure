@@ -1,0 +1,3 @@
+# Deprecated: The postgresql Helm release for resume-backend is now managed by `all-infrastructure`.
+# See: https://github.com/Black-And-White-Club/all-infrastructure/multi-source-apps/postgres-resume-backend-app.yaml
+# Please remove or keep this file only if you intend to manage the release from `resume-infrastructure`.

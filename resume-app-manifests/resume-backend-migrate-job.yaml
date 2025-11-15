@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: resume-backend-migrate
+  namespace: resume-app
+  labels:
+    app: resume-backend
+spec:
+  template:
+    spec:
+      containers:
+        - name: migrate
+          image: us-ashburn-1.ocir.io/id2uwn5pyixh/resume/backend:dev
+          command: ["/bin/sh", "-c", "./resume-backend migrate"]
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: resume-backend-postgresql
+                  key: DATABASE_URL
+      restartPolicy: OnFailure

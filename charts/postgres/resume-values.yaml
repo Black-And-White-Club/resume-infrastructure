@@ -1,0 +1,4 @@
+# DEPRECATED: This file is deprecated and has been moved to the infra repository.
+# The canonical values file for the resume backend Postgres release now lives at:
+# https://github.com/Black-And-White-Club/all-infrastructure/blob/main/charts/postgres/resume-values.yaml
+# Keep this file only if you intend to manage the Helm release from this repo.

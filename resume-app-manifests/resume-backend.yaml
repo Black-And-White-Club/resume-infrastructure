@@ -36,18 +36,30 @@ spec:
         - name: ocir-secret
       containers:
         - name: resume-backend
-          image: us-ashburn-1.ocir.io/id2uwn5pyixh/resume/backend:a5cb7d5
+          image: us-ashburn-1.ocir.io/id2uwn5pyixh/resume/backend:dev
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
           envFrom:
             - secretRef:
-                name: backend-db-credentials
+                name: resume-backend-postgresql
           env:
             - name: ALLOWED_ORIGINS
               value: https://jaromero.cloud/
             - name: APP_ENV
               value: dev
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: resume-backend-postgresql
+                  key: DATABASE_URL
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "50m"
+            limits:
+              memory: "512Mi"
+              cpu: "250m"
           livenessProbe:
             httpGet:
               path: /healthz

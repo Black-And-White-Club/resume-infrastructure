@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: resume-db-only-backend
+  namespace: resume-db
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/instance: resume-backend
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: resume-app
+          podSelector:
+            matchLabels:
+              app: resume-backend
+      ports:
+        - protocol: TCP
+          port: 5432
