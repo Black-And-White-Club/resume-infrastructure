@@ -25,11 +25,7 @@ kind: Deployment
 metadata:
   name: resume-frontend
   namespace: resume-app
-  annotations:
-    argocd-image-updater.argoproj.io/image-list: frontend=iad.ocir.io/id2uwn5pyixh/resume/frontend
-    argocd-image-updater.argoproj.io/frontend.update-strategy: latest
-    argocd-image-updater.argoproj.io/frontend.allow-tags: regexp:^[0-9a-f]{7}$
-    argocd-image-updater.argoproj.io/frontend.pull-secret: pullsecret:resume-app/ocir-secret
+  # Annotations for argocd-image-updater have been removed — ImageUpdater CR manages updates now via Kustomize.
 spec:
   replicas: 1
   selector:
@@ -44,7 +40,7 @@ spec:
         - name: ocir-secret
       containers:
         - name: resume-frontend
-          image: iad.ocir.io/id2uwn5pyixh/resume/frontend:94ab36a
+          image: us-ashburn-1.ocir.io/id2uwn5pyixh/resume/frontend:94ab36a
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
