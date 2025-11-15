@@ -1,3 +1,8 @@
 resources:
   - resume-frontend.yaml
   - resume-backend.yaml
+images:
+  - name: us-ashburn-1.ocir.io/id2uwn5pyixh/resume/frontend
+    newTag: 94ab36a
+  - name: us-ashburn-1.ocir.io/id2uwn5pyixh/resume/backend
+    newTag: b06c023
