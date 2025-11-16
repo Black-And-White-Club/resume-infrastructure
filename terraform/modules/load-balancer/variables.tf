@@ -35,3 +35,24 @@ variable "backend_http_port" {
   default     = 80
 }
 
+variable "compartment_ocid" {
+  description = "OCI compartment OCID where the load balancer should be created"
+  type        = string
+  default     = ""
+}
+
+variable "subnet_ids" {
+  description = "List of OCI subnet OCIDs to place the load balancer in"
+  type        = list(string)
+  default     = []
+}
+
+variable "backend_instance_ocids" {
+  description = "List of backend instance OCIDs for the OCI load balancer"
+  type        = list(string)
+  default     = []
+}
+
+// DEPRECATED: load-balancer variables moved to centralized module
+// See: all-infrastructure/terraform/modules/load-balancer
+

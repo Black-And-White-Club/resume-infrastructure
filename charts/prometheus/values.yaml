@@ -45,8 +45,8 @@ grafana:
           - jaromero.cloud
   persistence:
     enabled: true
-    storageClassName: ""
-    existingClaim: grafana-local-pvc
+    storageClassName: "oci-block-storage"
+    # Use chart-provisioned PVCs rather than an existing claim to avoid hostPath PVs
     accessModes:
       - ReadWriteOnce
     size: 5Gi

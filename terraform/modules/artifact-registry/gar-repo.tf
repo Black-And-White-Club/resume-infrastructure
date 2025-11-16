@@ -1,11 +1,11 @@
-resource "google_artifact_registry_repository" "iac_repo" {
-  project       = var.project_id
-  location      = var.region
-  repository_id = var.repo_name
-  format        = "DOCKER"
-  description   = "Resume Portfolio Docker Images"
+// DEPRECATED: artifact-registry implementation moved to the centralized
+// all-infrastructure/terraform/modules/artifact-registry
 
-  docker_config {
-    immutable_tags = false
-  }
+// Wrapper for centralized OCIR repository
+module "artifact_registry_shared" {
+  source = "git::ssh://git@github.com/YOUR_ORG/all-infrastructure.git//terraform/modules/artifact-registry?ref=migrate-service-account"
+
+  compartment_ocid  = var.compartment_ocid
+  tenancy_namespace = var.tenancy_namespace
+  repo_name         = var.repo_name
 }

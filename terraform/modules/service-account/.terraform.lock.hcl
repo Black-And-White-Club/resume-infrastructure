@@ -1,6 +1,8 @@
 # This file is maintained automatically by "terraform init".
 # Manual edits may be lost in future updates.
 
+# DEPRECATED: this module was consolidated to the mono repo. Lock file kept for audit; remove when cleaning up.
+
 provider "registry.terraform.io/hashicorp/google" {
   version     = "6.9.0"
   constraints = "~> 6.9.0"

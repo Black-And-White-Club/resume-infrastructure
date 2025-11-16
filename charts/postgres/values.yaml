@@ -27,9 +27,8 @@ metrics:
 # Initialize the database with SQL scripts from a secret
 primary:
   persistence:
-    volumeName: "db-storage"
-    existingClaim: "db-storage"
-    storageClass: "-"
+    # Use dynamic provisioning for production with OCI block storage
+    storageClass: "oci-block-storage"
     accessModes:
       - ReadWriteOnce
     size: 8Gi

@@ -14,3 +14,18 @@ variable "repo_name" {
   type        = string
   sensitive   = true
 }
+
+variable "compartment_ocid" {
+  description = "OCI compartment OCID where repository should be created"
+  type        = string
+  default     = ""
+}
+
+variable "tenancy_namespace" {
+  description = "OCI tenancy namespace used for OCIR (the namespace part of repository URL)"
+  type        = string
+  default     = ""
+}
+
+// DEPRECATED: artifact-registry module variables moved to the mono repo.
+// Keep project tfvars for values; implementation is centralized.
