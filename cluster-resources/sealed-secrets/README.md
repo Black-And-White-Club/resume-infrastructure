@@ -8,7 +8,7 @@ How to create a sealed secret for the resume backend Postgres:
 
 ```bash
 export PG_PASSWORD=$(openssl rand -hex 16)
-kubectl -n resume-db create secret generic resume-backend-postgresql \
+kubectl --kubeconfig ~/.kube/config-oci -n resume-db create secret generic resume-backend-postgresql \
   --from-literal=postgresql-password="${PG_PASSWORD}" \
   --from-literal=postgresql-username="resume_user" \
   --from-literal=postgresql-database="resume_db" \
@@ -28,16 +28,16 @@ kubeseal --format=yaml < resume-backend-postgresql-secret.yaml > sealed-resume-b
 Testing:
 
 - After ArgoCD reconciles, verify the secret exists:
-  kubectl -n resume-db get secret resume-backend-postgresql
-  kubectl -n resume-app get secret resume-backend-postgresql
+  kubectl --kubeconfig ~/.kube/config-oci -n resume-db get secret resume-backend-postgresql
+  kubectl --kubeconfig ~/.kube/config-oci -n resume-app get secret resume-backend-postgresql
 
 Quick test commands:
 
 ```bash
 # Verify DB pods are running
-kubectl -n resume-db get pods -l app.kubernetes.io/name=postgresql
+kubectl --kubeconfig ~/.kube/config-oci -n resume-db get pods -l app.kubernetes.io/name=postgresql
 
 # Verify the backend pod can connect to the DB (use the app's image or a debug pod if needed)
-kubectl -n resume-app run -it --rm --image=postgres:15 debug -- bash -c \
-"export PGPASSWORD=$(kubectl -n resume-app get secret resume-backend-postgresql -o jsonpath='{.data.postgresql-password}' | base64 --decode); psql -h resume-backend-postgresql.resume-db.svc.cluster.local -U resume_user -d resume_db -c '\dt'"
+kubectl --kubeconfig ~/.kube/config-oci -n resume-app run -it --rm --image=postgres:15 debug -- bash -c \
+"export PGPASSWORD=$(kubectl --kubeconfig ~/.kube/config-oci -n resume-app get secret resume-backend-postgresql -o jsonpath='{.data.postgresql-password}' | base64 --decode); psql -h resume-backend-postgresql.resume-db.svc.cluster.local -U resume_user -d resume_db -c '\dt'"
 ```
