@@ -1,0 +1,11 @@
+name: alloy
+app:
+  name: alloy
+  helmRepo: https://grafana.github.io/helm-charts
+  chart: alloy
+  chartVersion: "1.2.1"
+  valueFiles: charts/alloy/values.yaml
+  namespace: resume-app
+  ssa: ServerSideApply=true,CreateNamespace=true
+  # Use syncWave to ensure alloy deploys after namespaced resources if needed
+  syncWave: "1"

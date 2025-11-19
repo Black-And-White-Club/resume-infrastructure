@@ -1,0 +1,65 @@
+daemonset:
+  enabled: false
+
+# Minimal resources for agent
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 256Mi
+
+configReloader:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 32Mi
+    limits:
+      cpu: 50m
+      memory: 64Mi
+
+# Metrics -> Mimir (remote_write)
+metrics:
+  enabled: true
+  # Remote write endpoint - uses central Mimir installed in observability namespace
+  remote_write:
+    - url: http://mimir.observability.svc.cluster.local:8080/api/v1/push
+  # We only need Prometheus scraping for resume backend - use the metrics.prometheus key as the alloy helm chart expects
+  prometheus:
+    enabled: true
+    # Minimal config to scrape the resume-backend service in namespace `resume-app`
+    scrape_configs:
+      - job_name: "resume-backend"
+        metrics_path: /metrics
+        kubernetes_sd_configs:
+          - role: endpoints
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_service_label_app]
+            regex: resume-backend
+            action: keep
+        scheme: http
+      - job_name: "resume-postgres"
+        metrics_path: /metrics
+        kubernetes_sd_configs:
+          - role: endpoints
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_service_name]
+            regex: resume-backend-postgresql
+            action: keep
+        scheme: http
+
+loki:
+  enabled: false
+
+tempo:
+  enabled: false
+
+alloy:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi

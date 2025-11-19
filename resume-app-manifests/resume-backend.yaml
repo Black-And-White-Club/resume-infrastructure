@@ -9,6 +9,7 @@ metadata:
 spec:
   selector:
     app: resume-backend
+  # ports defined above
   ports:
     - name: api-port
       protocol: TCP
@@ -21,7 +22,6 @@ kind: Deployment
 metadata:
   name: resume-backend
   namespace: resume-app
-  # Annotations for argocd-image-updater removed — ImageUpdater CR manages updates now via Kustomize.
 spec:
   replicas: 1
   selector:
@@ -73,21 +73,4 @@ spec:
             initialDelaySeconds: 30
             timeoutSeconds: 1
 
----
-apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
-metadata:
-  name: resume-backend-monitor
-  namespace: resume-app
-  labels:
-    app: resume-backend-monitor
-    release: prometheus
-spec:
-  jobLabel: job
-  selector:
-    matchLabels:
-      app: resume-backend
-  endpoints:
-    - port: api-port
-      path: /metrics
-      interval: 3m
+  # ServiceMonitor removed: Resume now uses Alloy to scrape metrics and remote_write to Mimir

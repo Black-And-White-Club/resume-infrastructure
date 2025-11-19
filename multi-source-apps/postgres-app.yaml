@@ -1,8 +1,8 @@
 name: postgres
 app:
   name: postgres
-  helmRepo: registry-1.docker.io
-  chart: bitnamicharts/postgresql
+  helmRepo: https://charts.bitnami.com/bitnami
+  chart: bitnami/postgresql
   chartVersion: "18.1.10"
   valueFiles: charts/postgres/values.yaml
   namespace: postgres
