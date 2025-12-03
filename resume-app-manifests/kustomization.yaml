@@ -3,6 +3,6 @@ resources:
   - resume-backend.yaml
 images:
   - name: us-ashburn-1.ocir.io/id2uwn5pyixh/resume/frontend
-    newTag: 94ab36a
+    newTag: latest
   - name: us-ashburn-1.ocir.io/id2uwn5pyixh/resume/backend
-    newTag: b06c023
+    newTag: latest
